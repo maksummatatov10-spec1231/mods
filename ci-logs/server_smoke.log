@@ -13,8 +13,8 @@ Fabric Loom: 1.9.2
 > Task :configureLaunch
 
 > Task :runServer
-[15:09:44] [main/INFO] (FabricLoader/GameProvider) Loading Minecraft 1.21.4 with Fabric Loader 0.16.9
-[15:09:44] [main/INFO] (FabricLoader) Loading 44 mods:
+[15:10:08] [main/INFO] (FabricLoader/GameProvider) Loading Minecraft 1.21.4 with Fabric Loader 0.16.9
+[15:10:08] [main/INFO] (FabricLoader) Loading 44 mods:
 	- fabric-api 0.119.4+1.21.4
 	- fabric-api-base 0.4.54+b47eab6b04
 	- fabric-api-lookup-api-v1 1.6.86+b1caf1e904
@@ -59,11 +59,7 @@ Fabric Loom: 1.9.2
 	- minecraft 1.21.4
 	- mixinextras 0.4.1
 	- stormfang 1.0.0
-[15:09:44] [main/INFO] (FabricLoader/Mixin) SpongePowered MIXIN Subsystem Version=0.8.7 Source=file:/home/runner/.gradle/caches/modules-2/files-2.1/net.fabricmc/sponge-mixin/0.15.4+mixin.0.8.7/6a12aacc794f1078458433116e9ed42c1cc98096/sponge-mixin-0.15.4+mixin.0.8.7.jar Service=Knot/Fabric Env=SERVER
-[15:09:44] [main/INFO] (FabricLoader/Mixin) Loaded Fabric development mappings for mixin remapper!
-[15:09:44] [main/INFO] (FabricLoader/Mixin) Compatibility level set to JAVA_21
-[15:09:45] [main/INFO] (FabricLoader/MixinExtras|Service) Initializing MixinExtras via com.llamalad7.mixinextras.service.MixinExtrasServiceImpl(version=0.4.1).
-[15:09:53] [main/INFO] (stormfang) [Stormfang] Stormblade forged: item='stormfang:stormfang', spark particle + thunder sound loaded.
-[15:09:53] [main/INFO] (Minecraft) Environment: Environment[sessionHost=https://sessionserver.mojang.com, servicesHost=https://api.minecraftservices.com, name=PROD]
-[15:09:54] [main/INFO] (Minecraft) No existing world data, creating new world
-[15:09:54] [main/ERROR] (Minecraft) No key layers in MapLike[{}]
+[15:10:09] [main/INFO] (FabricLoader/Mixin) SpongePowered MIXIN Subsystem Version=0.8.7 Source=file:/home/runner/.gradle/caches/modules-2/files-2.1/net.fabricmc/sponge-mixin/0.15.4+mixin.0.8.7/6a12aacc794f1078458433116e9ed42c1cc98096/sponge-mixin-0.15.4+mixin.0.8.7.jar Service=Knot/Fabric Env=SERVER
+[15:10:09] [main/INFO] (FabricLoader/Mixin) Loaded Fabric development mappings for mixin remapper!
+[15:10:09] [main/INFO] (FabricLoader/Mixin) Compatibility level set to JAVA_21
+[15:10:10] [main/INFO] (FabricLoader/MixinExtras|Service) Initializing MixinExtras via com.llamalad7.mixinextras.service.MixinExtrasServiceImpl(version=0.4.1).
