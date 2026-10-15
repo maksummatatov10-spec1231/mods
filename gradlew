@@ -118,7 +118,8 @@ if [ "$MODE" = server ]; then
     fi
     (command -v xdotool >/dev/null 2>&1 || sudo apt-get install -y -qq xdotool >/dev/null 2>&1 || true)
     CL="$D/client.log"
-    SH=$(find "$D/build" -type f -name '*lient*.sh' 2>/dev/null | grep -v sources | head -1)
+    SH=$(find "$D/build" -type f -path '*script*' -iname '*client*' 2>/dev/null | grep -v '\.bat' | grep -v sources | head -1)
+    [ -n "$SH" ] && chmod +x "$SH" 2>/dev/null
     if [ -n "$SH" ]; then
       mkdir -p "$D/run-client"
       ( cd "$D/run-client" && DISPLAY=:99 "$SH" ) >> "$CL" 2>&1 &
