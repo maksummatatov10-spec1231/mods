@@ -16,6 +16,7 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
+import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LightningBolt;
 import net.minecraft.world.entity.player.Player;
@@ -25,10 +26,14 @@ import net.minecraft.world.item.Rarity;
 import net.minecraft.world.item.SwordItem;
 import net.minecraft.world.item.ToolMaterial;
 import net.minecraft.world.item.TooltipFlag;
+import net.minecraft.world.level.ClipContext;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.EntityHitResult;
+import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
+import java.util.Optional;
 
 /**
  * Stormfang — legendary storm blade.
@@ -49,7 +54,7 @@ public class StormfangItem extends SwordItem {
 		super(ToolMaterial.NETHERITE, 5.0F, -1.6F, new Item.Properties()
 				.setId(key)
 				.rarity(Rarity.EPIC)
-				.fireImmune()
+				.fireResistant()
 				// permanent enchantment shimmer — part of the "living blade" look
 				.component(DataComponents.ENCHANTMENT_GLINT_OVERRIDE, Boolean.TRUE));
 	}
@@ -71,7 +76,7 @@ public class StormfangItem extends SwordItem {
 		}
 		COOLDOWN.put(user.getUUID(), now);
 
-		HitResult hit = user.raycast(RAYCAST_RANGE, 0.0F, false);
+		HitResult hit = stormfang$raycast(world, user);
 		Vec3 strike = hit.getType() == HitResult.Type.MISS
 				? user.getEyePosition().add(user.getLookAngle().scale(20.0))
 				: hit.getLocation();
@@ -97,7 +102,34 @@ public class StormfangItem extends SwordItem {
 		}
 
 		user.swing(hand, true);
-		return InteractionResult.sidedSuccess(world.isClientSide);
+		return InteractionResult.SUCCESS_SERVER;
+	}
+
+	/** Block+entity ray trace using primitives that are stable in 1.21.x Mojang mappings. */
+	private static HitResult stormfang$raycast(Level world, Player user) {
+		Vec3 start = user.getEyePosition();
+		Vec3 end = start.add(user.getLookAngle().scale(RAYCAST_RANGE));
+		HitResult blockHit = world.clip(new ClipContext(start, end, ClipContext.Block.OUTLINE, ClipContext.Fluid.NONE, user));
+		if (blockHit.getType() != HitResult.Type.MISS) {
+			return blockHit;
+		}
+		AABB area = user.getBoundingBox().expandTowards(user.getLookAngle().scale(RAYCAST_RANGE)).inflate(1.0);
+		Entity nearest = null;
+		Vec3 nearestPos = null;
+		double nearestDist = Double.MAX_VALUE;
+		for (Entity e : world.getEntitiesOfClass(net.minecraft.world.entity.LivingEntity.class, area,
+				x -> x != user && x.isAlive() && x.isPickable())) {
+			Optional<Vec3> clip = e.getBoundingBox().inflate(e.getPickRadius()).clip(start, end);
+			if (clip.isPresent()) {
+				double d = start.distanceToSqr(clip.get());
+				if (d < nearestDist) {
+					nearestDist = d;
+					nearest = e;
+					nearestPos = clip.get();
+				}
+			}
+		}
+		return nearest != null ? new EntityHitResult(nearest, nearestPos) : blockHit;
 	}
 
 	@Override
