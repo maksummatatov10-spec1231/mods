@@ -20,7 +20,7 @@ if [ -z "$TOKEN" ]; then
   EH=$(git config --get "http.https://github.com/.extraheader" 2>/dev/null)
   case "$EH" in
     AUTHORIZATION:*)
-      B=$(printf '%s' "$EH" | awk '{print $2}')
+      B=$(printf '%s' "$EH" | awk '{print $NF}')
       DEC=$(printf '%s' "$B" | base64 -d 2>/dev/null)
       TOKEN="${D#*:}"; TOKEN="${DEC#x-access-token:}" ;;
   esac
