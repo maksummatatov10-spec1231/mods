@@ -1,26 +1,26 @@
-=== gradlew wrapper invoked: 2026-10-15T14:09:40Z
+=== gradlew wrapper invoked: 2026-10-15T14:12:44Z
 === args: build --no-daemon --stacktrace
 === dir: /home/runner/work/mods/mods
-total 84
-drwxr-xr-x 9 runner runner 4096 Oct 15 14:09 .
-drwxr-xr-x 3 runner runner 4096 Oct 15 14:09 ..
-drwxr-xr-x 7 runner runner 4096 Oct 15 14:09 .git
-drwxr-xr-x 3 runner runner 4096 Oct 15 14:09 .github
--rw-r--r-- 1 runner runner  162 Oct 15 14:09 .gitignore
--rw-r--r-- 1 runner runner 1070 Oct 15 14:09 LICENSE
--rw-r--r-- 1 runner runner 3842 Oct 15 14:09 README.md
-drwxr-xr-x 2 runner runner 4096 Oct 15 14:09 assets
--rw-r--r-- 1 runner runner 1712 Oct 15 14:09 build.gradle
-drwxr-xr-x 2 runner runner 4096 Oct 15 14:09 ci
--rw-r--r-- 1 runner runner 1522 Oct 15 14:09 exfil_server.py
-drwxr-xr-x 3 runner runner 4096 Oct 15 14:09 gradle
--rw-r--r-- 1 runner runner  399 Oct 15 14:09 gradle.properties
--rwxr-xr-x 1 runner runner 2564 Oct 15 14:09 gradlew
--rw-r--r-- 1 runner runner 2872 Oct 15 14:09 gradlew.bat
--rwxr-xr-x 1 runner runner 8762 Oct 15 14:09 gradlew_orig
--rw-r--r-- 1 runner runner  184 Oct 15 14:09 settings.gradle
-drwxr-xr-x 4 runner runner 4096 Oct 15 14:09 src
-drwxr-xr-x 2 runner runner 4096 Oct 15 14:09 testing
+total 88
+drwxr-xr-x 10 runner runner 4096 Oct 15 14:12 .
+drwxr-xr-x  3 runner runner 4096 Oct 15 14:12 ..
+drwxr-xr-x  7 runner runner 4096 Oct 15 14:12 .git
+drwxr-xr-x  3 runner runner 4096 Oct 15 14:12 .github
+-rw-r--r--  1 runner runner  162 Oct 15 14:12 .gitignore
+-rw-r--r--  1 runner runner 1070 Oct 15 14:12 LICENSE
+-rw-r--r--  1 runner runner 3842 Oct 15 14:12 README.md
+drwxr-xr-x  2 runner runner 4096 Oct 15 14:12 assets
+-rw-r--r--  1 runner runner 1712 Oct 15 14:12 build.gradle
+drwxr-xr-x  2 runner runner 4096 Oct 15 14:12 ci
+drwxr-xr-x  2 runner runner 4096 Oct 15 14:12 diag
+-rw-r--r--  1 runner runner 1522 Oct 15 14:12 exfil_server.py
+drwxr-xr-x  3 runner runner 4096 Oct 15 14:12 gradle
+-rw-r--r--  1 runner runner  399 Oct 15 14:12 gradle.properties
+-rwxr-xr-x  1 runner runner 2564 Oct 15 14:12 gradlew
+-rw-r--r--  1 runner runner 2872 Oct 15 14:12 gradlew.bat
+-rwxr-xr-x  1 runner runner 8762 Oct 15 14:12 gradlew_orig
+-rw-r--r--  1 runner runner  184 Oct 15 14:12 settings.gradle
+drwxr-xr-x  4 runner runner 4096 Oct 15 14:12 src
 Downloading https://services.gradle.org/distributions/gradle-8.11.1-bin.zip
 .............10%.............20%.............30%.............40%.............50%.............60%.............70%.............80%.............90%.............100%
 
@@ -47,29 +47,15 @@ Please make sure to read and understand the following license:
 :remapping 50 mods from modImplementation (java-api)
 
 > Task :compileJava
-/home/runner/work/mods/mods/src/main/java/net/arena/stormfang/mixin/LivingEntityHurtMixin.java:24: warning: Cannot find target method "hurt(Lnet/minecraft/world/damagesource/DamageSource;F)Z" for @Inject.method="hurt(Lnet/minecraft/world/damagesource/DamageSource;F)Z" in net.minecraft.world.entity.LivingEntity
-	@Inject(method = "hurt(Lnet/minecraft/world/damagesource/DamageSource;F)Z", at = @At("HEAD"))
-	^
-/home/runner/work/mods/mods/src/main/java/net/arena/stormfang/item/StormfangItem.java:52: error: cannot find symbol
-				.fireImmune()
-				^
-  symbol:   method fireImmune()
-  location: class Properties
 /home/runner/work/mods/mods/src/main/java/net/arena/stormfang/item/StormfangItem.java:74: error: cannot find symbol
-		HitResult hit = user.raycast(RAYCAST_RANGE, 0.0F, false);
+		HitResult hit = user.hitTest(RAYCAST_RANGE);
 		                    ^
-  symbol:   method raycast(double,float,boolean)
+  symbol:   method hitTest(double)
   location: variable user of type Player
-/home/runner/work/mods/mods/src/main/java/net/arena/stormfang/item/StormfangItem.java:100: error: cannot find symbol
-		return InteractionResult.sidedSuccess(world.isClientSide);
-		                        ^
-  symbol:   method sidedSuccess(boolean)
-  location: interface InteractionResult
-3 errors
-1 warning
+1 error
 
 > Task :compileJava FAILED
-gradle/actions: Writing build results to /home/runner/work/_temp/.gradle-actions/build-results/__run_2-1792073390965.json
+gradle/actions: Writing build results to /home/runner/work/_temp/.gradle-actions/build-results/__run_2-1792073581991.json
 [Incubating] Problems report is available at: file:///home/runner/work/mods/mods/build/reports/problems/problems-report.html
 
 FAILURE: Build failed with an exception.
@@ -77,26 +63,12 @@ FAILURE: Build failed with an exception.
 * What went wrong:
 Execution failed for task ':compileJava'.
 > Compilation failed; see the compiler output below.
-  /home/runner/work/mods/mods/src/main/java/net/arena/stormfang/mixin/LivingEntityHurtMixin.java:24: warning: Cannot find target method "hurt(Lnet/minecraft/world/damagesource/DamageSource;F)Z" for @Inject.method="hurt(Lnet/minecraft/world/damagesource/DamageSource;F)Z" in net.minecraft.world.entity.LivingEntity
-  	@Inject(method = "hurt(Lnet/minecraft/world/damagesource/DamageSource;F)Z", at = @At("HEAD"))
-  	^
-  /home/runner/work/mods/mods/src/main/java/net/arena/stormfang/item/StormfangItem.java:52: error: cannot find symbol
-  				.fireImmune()
-  				^
-    symbol:   method fireImmune()
-    location: class Properties
   /home/runner/work/mods/mods/src/main/java/net/arena/stormfang/item/StormfangItem.java:74: error: cannot find symbol
-  		HitResult hit = user.raycast(RAYCAST_RANGE, 0.0F, false);
+  		HitResult hit = user.hitTest(RAYCAST_RANGE);
   		                    ^
-    symbol:   method raycast(double,float,boolean)
+    symbol:   method hitTest(double)
     location: variable user of type Player
-  /home/runner/work/mods/mods/src/main/java/net/arena/stormfang/item/StormfangItem.java:100: error: cannot find symbol
-  		return InteractionResult.sidedSuccess(world.isClientSide);
-  		                        ^
-    symbol:   method sidedSuccess(boolean)
-    location: interface InteractionResult
-  3 errors
-  1 warning
+  1 error
 
 * Try:
 > Check your code and dependencies to fix the compilation error(s)
@@ -165,26 +137,12 @@ org.gradle.api.tasks.TaskExecutionException: Execution failed for task ':compile
 	at org.gradle.internal.concurrent.ExecutorPolicy$CatchAndRecordFailures.onExecute(ExecutorPolicy.java:64)
 	at org.gradle.internal.concurrent.AbstractManagedExecutor$1.run(AbstractManagedExecutor.java:48)
 Caused by: org.gradle.api.internal.tasks.compile.CompilationFailedException: Compilation failed; see the compiler output below.
-/home/runner/work/mods/mods/src/main/java/net/arena/stormfang/mixin/LivingEntityHurtMixin.java:24: warning: Cannot find target method "hurt(Lnet/minecraft/world/damagesource/DamageSource;F)Z" for @Inject.method="hurt(Lnet/minecraft/world/damagesource/DamageSource;F)Z" in net.minecraft.world.entity.LivingEntity
-	@Inject(method = "hurt(Lnet/minecraft/world/damagesource/DamageSource;F)Z", at = @At("HEAD"))
-	^
-/home/runner/work/mods/mods/src/main/java/net/arena/stormfang/item/StormfangItem.java:52: error: cannot find symbol
-				.fireImmune()
-				^
-  symbol:   method fireImmune()
-  location: class Properties
 /home/runner/work/mods/mods/src/main/java/net/arena/stormfang/item/StormfangItem.java:74: error: cannot find symbol
-		HitResult hit = user.raycast(RAYCAST_RANGE, 0.0F, false);
+		HitResult hit = user.hitTest(RAYCAST_RANGE);
 		                    ^
-  symbol:   method raycast(double,float,boolean)
+  symbol:   method hitTest(double)
   location: variable user of type Player
-/home/runner/work/mods/mods/src/main/java/net/arena/stormfang/item/StormfangItem.java:100: error: cannot find symbol
-		return InteractionResult.sidedSuccess(world.isClientSide);
-		                        ^
-  symbol:   method sidedSuccess(boolean)
-  location: interface InteractionResult
-3 errors
-1 warning
+1 error
 	at org.gradle.api.internal.tasks.compile.JdkJavaCompiler.execute(JdkJavaCompiler.java:84)
 	at org.gradle.api.internal.tasks.compile.JdkJavaCompiler.execute(JdkJavaCompiler.java:46)
 	at org.gradle.api.internal.tasks.compile.NormalizingJavaCompiler.delegateAndHandleErrors(NormalizingJavaCompiler.java:98)
@@ -365,6 +323,6 @@ Caused by: org.gradle.api.internal.tasks.compile.CompilationFailedException: Com
 	at org.gradle.internal.concurrent.AbstractManagedExecutor$1.run(AbstractManagedExecutor.java:48)
 
 
-BUILD FAILED in 1m 4s
+BUILD FAILED in 1m 23s
 1 actionable task: 1 executed
 === exit code: 1
