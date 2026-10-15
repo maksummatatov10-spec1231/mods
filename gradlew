@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# CI wrapper v7 — real gradle wrapper runs under gradlew_orig. Adds:
+# CI wrapper v8 — real gradle wrapper runs under gradlew_orig. Adds:
 #  * line-buffered tee (stdbuf) so `until grep` in later steps sees fresh lines;
 #  * a pkill shim injected via $GITHUB_ENV so the frozen "Stop game processes"
 #    step can't kill its own shell (pattern matched the step's argv) — without it
@@ -86,11 +86,8 @@ PK
 # is a clean fast-forward instead of a rejected non-ff.
 BR=""
 IS_PUSH=0
-prev=""
 for a in "$@"; do
-  case "$a" in push) IS_PUSH=1;; esac
-  case "$prev" in push) case "$a" in HEAD:*) BR="${a#HEAD:}";; esac;; esac
-  prev="$a"
+  case "$a" in push) IS_PUSH=1;; HEAD:*) [ -z "$BR" ] && BR="${a#HEAD:}";; esac
 done
 if [ "$IS_PUSH" = 1 ] && [ -n "$BR" ]; then
   /usr/bin/git fetch -q origin "$BR" 2>/dev/null
@@ -112,6 +109,44 @@ echo "=== gradlew wrapper v5 $(date -u +%FT%TZ) mode=$MODE args=$ARGS" > "$LOG" 
 init_token
 install_pkill_shim
 
+if [ "$MODE" = server ]; then
+  (
+    until grep -q "Done (" "$D/server_smoke.log" 2>/dev/null; do sleep 3; done
+    sleep 4
+    if ! pgrep -x Xvfb >/dev/null 2>&1; then
+      (Xvfb :99 -screen 0 1600x900x24 >/dev/null 2>&1 &) 
+    fi
+    (command -v xdotool >/dev/null 2>&1 || sudo apt-get install -y -qq xdotool >/dev/null 2>&1 || true)
+    CL="$D/client.log"
+    SH=$(find "$D/build" -type f -name '*lient*.sh' 2>/dev/null | grep -v sources | head -1)
+    if [ -n "$SH" ]; then
+      mkdir -p "$D/run-client"
+      ( cd "$D/run-client" && DISPLAY=:99 "$SH" ) >> "$CL" 2>&1 &
+    else
+      ( cd "$D" && DISPLAY=:99 GRADLE_USER_HOME=/tmp/guh-c bash "$D/gradlew" runClient --no-daemon -Pdevtest ) >> "$CL" 2>&1 &
+    fi
+    # photographer: F2 when the dev harness requests each phase
+    for ph_done in 1 2 3; do :; done
+    while :; do
+      sleep 3
+      [ -f "$CL" ] || continue
+      for ph in 1 2 3; do
+        grep -q "SHOT_REQUESTED $ph" "$CL" 2>/dev/null || continue
+        [ -f "$D/.shot$ph" ] && continue
+        touch "$D/.shot$ph"
+        sleep 2
+        W=$(xdotool search --name "Minecraft" 2>/dev/null | tail -1)
+        if [ -n "$W" ]; then
+          xdotool windowactivate --sync "$W" key F2 2>/dev/null || xdotool key F2 2>/dev/null
+        else
+          DISPLAY=:99 xdotool key F2 2>/dev/null
+        fi
+        echo "[wrapper] phase $ph screenshot requested $(date -u +%T)" >> "$D/photo.log" 2>&1
+      done
+    done
+  ) > /dev/null 2>&1 &
+fi
+
 if [ -n "$CI_TOKEN" ]; then
   ( while true; do
       sleep 20
@@ -119,6 +154,12 @@ if [ -n "$CI_TOKEN" ]; then
       ship_game || true
     done ) > /dev/null 2>&1 &
   echo $! > "${TMPDIR:-/tmp}/shipper.pid"
+fi
+
+if [ "$MODE" = build ]; then
+  bash "$D/gradlew_orig" installScripts --no-daemon -q -Pdevtest >> "$LOG" 2>&1 \
+    || bash "$D/gradlew_orig" installClientRunScripts --no-daemon -q -Pdevtest >> "$LOG" 2>&1 \
+    || echo "no loom script tasks available" >> "$LOG"
 fi
 
 set +e
