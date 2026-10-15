@@ -1,0 +1,34 @@
+{
+	"schemaVersion": 1,
+	"id": "stormfang",
+	"version": "${version}",
+	"name": "Stormfang — Грозовой Клинок",
+	"description": "Легендарный меч молний для Minecraft 1.21.4: анимированная текстура 512px, постоянный блеск зачарования, «Грозовой Разряд» по правой кнопке, 35% шанс бури при ударе, собственные частицы и синтезированный звук грома.",
+	"authors": [
+		"maksummatov10",
+		"Arena Agent"
+	],
+	"contact": {
+		"homepage": "https://github.com/maksummatatov10-spec1231/mods"
+	},
+	"license": "MIT",
+	"icon": "assets/stormfang/icon.png",
+	"environment": "*",
+	"entrypoints": {
+		"main": [
+			"net.arena.stormfang.StormfangMod"
+		],
+		"client": [
+			"net.arena.stormfang.client.StormfangClient"
+		]
+	},
+	"mixins": [
+		"stormfang.mixins.json"
+	],
+	"depends": {
+		"fabricloader": ">=0.16.9",
+		"minecraft": "~1.21.4",
+		"java": ">=21",
+		"fabric-api": "*"
+	}
+}

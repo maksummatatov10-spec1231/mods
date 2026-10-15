@@ -1,0 +1,16 @@
+# gradle
+.gradle/
+build/
+out/
+classes/
+
+# fabric
+run/
+
+# local artifacts
+logs/
+*.log
+npm.log
+testing/node_modules/
+testing/package-lock.json
+testing/package.json

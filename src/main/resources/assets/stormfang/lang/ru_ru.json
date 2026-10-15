@@ -1,0 +1,7 @@
+{
+	"itemGroup.stormfang": "Stormfang",
+	"item.stormfang.stormfang": "Штормовец",
+	"item.stormfang.stormfang.tooltip": "Выкован в сердце грозы.",
+	"item.stormfang.stormfang.tooltip2": "ПКМ: Грозовой разряд (40 блоков). 35%% шанс бури при ударе.",
+	"item.stormfang.stormfang.cooldown": "Буря ещё копит заряд..."
+}
