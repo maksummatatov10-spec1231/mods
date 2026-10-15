@@ -1,3 +1,50 @@
-=== gradlew wrapper v5 2026-10-15T15:17:26Z mode=build args=build --no-daemon --stacktrace
+=== gradlew wrapper v5 2026-10-15T15:17:39Z mode=build args=build --no-daemon --stacktrace
 Downloading https://services.gradle.org/distributions/gradle-8.11.1-bin.zip
 .............10%.............20%.............30%.............40%.............50%.............60%.............70%.............80%.............90%.............100%
+
+FAILURE: Build failed with an exception.
+
+* Where:
+Build file '/home/runner/work/mods/mods/build.gradle' line: 28
+
+* What went wrong:
+A problem occurred evaluating root project 'stormfang'.
+> Could not set unknown property 'runDirectory' for object of type net.fabricmc.loom.configuration.ide.RunConfigSettings.
+
+* Try:
+> Run with --stacktrace option to get the stack trace.
+> Run with --info or --debug option to get more log output.
+> Run with --scan to get full insights.
+> Get more help at https://help.gradle.org.
+
+BUILD FAILED in 13s
+
+FAILURE: Build failed with an exception.
+
+* Where:
+Build file '/home/runner/work/mods/mods/build.gradle' line: 28
+
+* What went wrong:
+A problem occurred evaluating root project 'stormfang'.
+> Could not set unknown property 'runDirectory' for object of type net.fabricmc.loom.configuration.ide.RunConfigSettings.
+
+* Try:
+> Run with --stacktrace option to get the stack trace.
+> Run with --info or --debug option to get more log output.
+> Run with --scan to get full insights.
+> Get more help at https://help.gradle.org.
+
+BUILD FAILED in 3s
+no loom script tasks available
+
+Welcome to Gradle 8.11.1!
+
+Here are the highlights of this release:
+ - Parallel load and store for Configuration Cache
+ - Java compilation errors at the end of the build output
+ - Consolidated report for warnings and deprecations
+
+For more details see https://docs.gradle.org/8.11.1/release-notes.html
+
+To honour the JVM settings for this build a single-use Daemon process will be forked. For more on this, please refer to https://docs.gradle.org/8.11.1/userguide/gradle_daemon.html#sec:disabling_the_daemon in the Gradle documentation.
+Daemon will be stopped at the end of the build 
