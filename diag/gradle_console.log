@@ -1,4 +1,4 @@
-=== gradlew wrapper v5 2026-10-15T15:07:52Z mode=build args=build --no-daemon --stacktrace
+=== gradlew wrapper v5 2026-10-15T15:08:17Z mode=build args=build --no-daemon --stacktrace
 Downloading https://services.gradle.org/distributions/gradle-8.11.1-bin.zip
 .............10%.............20%.............30%.............40%.............50%.............60%.............70%.............80%.............90%.............100%
 
@@ -29,22 +29,3 @@ Please make sure to read and understand the following license:
 > Task :classes
 > Task :compileClientJava
 > Task :processClientResources NO-SOURCE
-> Task :jar
-> Task :clientClasses
-> Task :compileTestJava NO-SOURCE
-> Task :processIncludeJars
-> Task :sourcesJar
-> Task :processTestResources NO-SOURCE
-> Task :testClasses UP-TO-DATE
-> Task :test NO-SOURCE
-> Task :validateAccessWidener NO-SOURCE
-> Task :check UP-TO-DATE
-> Task :remapJar
-> Task :remapSourcesJar
-> Task :assemble
-> Task :build
-gradle/actions: Writing build results to /home/runner/work/_temp/.gradle-actions/build-results/__run_2-1792076884428.json
-
-BUILD SUCCESSFUL in 1m 34s
-8 actionable tasks: 8 executed
-=== exit code: 0 2026-10-15T15:09:27Z
