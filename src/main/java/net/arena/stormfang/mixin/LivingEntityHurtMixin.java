@@ -21,20 +21,15 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
  */
 @Mixin(LivingEntity.class)
 public class LivingEntityHurtMixin {
-	@Inject(method = "hurt(Lnet/minecraft/world/damagesource/DamageSource;F)Z", at = @At("HEAD"))
-	private void stormfang$stormOnHit(DamageSource source, float amount, CallbackInfo ci) {
+	// 1.21.2+: LivingEntity#hurt(DamageSource,float) was split into hurtServer(ServerLevel,...)
+	@Inject(method = "hurtServer(Lnet/minecraft/server/level/ServerLevel;Lnet/minecraft/world/damagesource/DamageSource;F)Z", at = @At("HEAD"))
+	private void stormfang$stormOnHit(ServerLevel serverLevel, DamageSource source, float amount, CallbackInfo ci) {
 		LivingEntity self = (LivingEntity) (Object) this;
 		Level level = self.level();
-		if (level.isClientSide) {
-			return;
-		}
 		if (!(source.getEntity() instanceof Player attacker)) {
 			return;
 		}
 		if (!attacker.getMainHandItem().is(StormfangMod.STORMFANG)) {
-			return;
-		}
-		if (!(level instanceof ServerLevel serverLevel)) {
 			return;
 		}
 

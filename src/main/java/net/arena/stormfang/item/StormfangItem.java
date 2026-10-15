@@ -49,7 +49,7 @@ public class StormfangItem extends SwordItem {
 		super(ToolMaterial.NETHERITE, 5.0F, -1.6F, new Item.Properties()
 				.setId(key)
 				.rarity(Rarity.EPIC)
-				.fireImmune()
+				.fireResistant()
 				// permanent enchantment shimmer — part of the "living blade" look
 				.component(DataComponents.ENCHANTMENT_GLINT_OVERRIDE, Boolean.TRUE));
 	}
@@ -71,7 +71,7 @@ public class StormfangItem extends SwordItem {
 		}
 		COOLDOWN.put(user.getUUID(), now);
 
-		HitResult hit = user.raycast(RAYCAST_RANGE, 0.0F, false);
+		HitResult hit = user.hitTest(RAYCAST_RANGE);
 		Vec3 strike = hit.getType() == HitResult.Type.MISS
 				? user.getEyePosition().add(user.getLookAngle().scale(20.0))
 				: hit.getLocation();
@@ -97,7 +97,7 @@ public class StormfangItem extends SwordItem {
 		}
 
 		user.swing(hand, true);
-		return InteractionResult.sidedSuccess(world.isClientSide);
+		return InteractionResult.SUCCESS_SERVER;
 	}
 
 	@Override
