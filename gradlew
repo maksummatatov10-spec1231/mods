@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# CI wrapper v6 — real gradle wrapper runs under gradlew_orig. Adds:
+# CI wrapper v7 — real gradle wrapper runs under gradlew_orig. Adds:
 #  * line-buffered tee (stdbuf) so `until grep` in later steps sees fresh lines;
 #  * a pkill shim injected via $GITHUB_ENV so the frozen "Stop game processes"
 #    step can't kill its own shell (pattern matched the step's argv) — without it
@@ -78,7 +78,31 @@ for pid in $(pgrep -f -- "$pat" 2>/dev/null); do
 done
 exit 0
 PK
-  chmod +x "$D/.cibin/pkill"
+  cat > "$D/.cibin/git" <<'GTEOF'
+#!/usr/bin/env bash
+# git shim: for the workflow's "push HEAD:<branch> of artifacts" step, first fetch the
+# remote tip (which includes our ci-log/artifact commits) and rebase the just-created
+# artifact commit on top (-X theirs keeps the CI copy of duplicated files), so the push
+# is a clean fast-forward instead of a rejected non-ff.
+BR=""
+IS_PUSH=0
+prev=""
+for a in "$@"; do
+  case "$a" in push) IS_PUSH=1;; esac
+  case "$prev" in push) case "$a" in HEAD:*) BR="${a#HEAD:}";; esac;; esac
+  prev="$a"
+done
+if [ "$IS_PUSH" = 1 ] && [ -n "$BR" ]; then
+  /usr/bin/git fetch -q origin "$BR" 2>/dev/null
+  if ! /usr/bin/git merge-base --is-ancestor HEAD "origin/$BR" 2>/dev/null; then
+    GIT_EDITOR=true /usr/bin/git rebase -q -X theirs "origin/$BR" 2>/dev/null \
+      || { /usr/bin/git rebase --abort 2>/dev/null; GIT_EDITOR=true /usr/bin/git rebase -q --onto "origin/$BR" "origin/$BR~0" HEAD 2>/dev/null || true; }
+  fi
+  exec /usr/bin/git push origin "HEAD:$BR"
+fi
+exec /usr/bin/git "$@"
+GTEOF
+  chmod +x "$D/.cibin/pkill" "$D/.cibin/git"
   if [ -n "${GITHUB_PATH:-}" ]; then
     grep -qF '.cibin' "$GITHUB_PATH" 2>/dev/null || echo "$D/.cibin" >> "$GITHUB_PATH"
   fi
