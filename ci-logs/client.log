@@ -118,3 +118,10 @@ Fabric Loom: 1.9.2
 [19:52:26] [main/INFO] (FabricLoader/Mixin) Loaded Fabric development mappings for mixin remapper!
 [19:52:26] [main/INFO] (FabricLoader/Mixin) Compatibility level set to JAVA_21
 [19:52:28] [main/INFO] (FabricLoader/MixinExtras|Service) Initializing MixinExtras via com.llamalad7.mixinextras.service.MixinExtrasServiceImpl(version=0.4.1).
+[19:52:29] [Datafixer Bootstrap/INFO] (Minecraft) 243 Datafixer optimizations took 523 milliseconds
+[19:52:35] [Render thread/INFO] (Minecraft) Environment: Environment[sessionHost=https://sessionserver.mojang.com, servicesHost=https://api.minecraftservices.com, name=PROD]
+[19:52:35] [Render thread/INFO] (Minecraft) Setting user: Player642
+[19:52:35] [Render thread/INFO] (stormfang) [Stormfang] Stormblade forged: item='stormfang:stormfang', spark particle + thunder sound loaded.
+[19:52:35] [Render thread/INFO] (stormfang) [Stormfang] Stormblade forged: item='stormfang:stormfang', spark particle + thunder sound loaded.
+[19:52:35] [Render thread/INFO] (Indigo) [Indigo] Registering Indigo renderer!
+[19:52:36] [Render thread/INFO] (Minecraft) Backend library: LWJGL version 3.3.3-snapshot
