@@ -95,3 +95,10 @@ stormfang
 
 Contact the server's administrator for more information!
 [19:17:59] [Server thread/WARN] (Minecraft) handleDisconnection() called twice
+[19:18:42] [Server thread/INFO] (Minecraft) Server empty for 60 seconds, pausing
+[19:18:43] [Server thread/INFO] (Minecraft) Player321[/127.0.0.1:49090] logged in with entity id 1 at (1.5, -60.0, 8.5)
+[19:18:43] [Server thread/INFO] (stormfang) [Stormfang-CI] stormblade handed to Player321
+[19:18:43] [Server thread/INFO] (stormfang) [Stormfang-CI] opped via op()
+[19:18:43] [Server thread/INFO] (Minecraft) Player321 joined the game
+[19:18:47] [Server thread/INFO] (Minecraft) [Player321: Gave 1 [item.stormfang.stormfang] to Player321]
+[19:19:04] [Server thread/INFO] (stormfang) [Stormfang] Thunderclap by 'Player321' at 1.5 -58.4 28.5
