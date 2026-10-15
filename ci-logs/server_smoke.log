@@ -93,3 +93,5 @@ stormfang
 
 Contact the server's administrator for more information!
 [16:09:39] [Server thread/WARN] (Minecraft) handleDisconnection() called twice
+[16:10:13] [Server thread/INFO] (Minecraft) Player719[/127.0.0.1:34476] logged in with entity id 1 at (8.5, -60.0, 2.5)
+[16:10:13] [Server thread/INFO] (Minecraft) Player719 joined the game
