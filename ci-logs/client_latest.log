@@ -1,6 +1,4 @@
-
-[20:14:36] [main/INFO] (FabricLoader/MixinExtras|Service) Initializing MixinExtras via com.llamalad7.mixinextras.service.MixinExtrasServiceImpl(version=0.4.1).
-[20:14:37] [Datafixer Bootstrap/INFO] (Minecraft) 243 Datafixer optimizations took 326 milliseconds
+NFO] (Minecraft) 243 Datafixer optimizations took 326 milliseconds
 [20:14:41] [Render thread/INFO] (Minecraft) Environment: Environment[sessionHost=https://sessionserver.mojang.com, servicesHost=https://api.minecraftservices.com, name=PROD]
 [20:14:41] [Render thread/INFO] (Minecraft) Setting user: Player932
 [20:14:41] [Render thread/INFO] (stormfang) [Stormfang] Stormblade forged: item='stormfang:stormfang', spark particle + thunder sound loaded.
@@ -291,3 +289,5 @@ Native library (linux-x86-64/libflite.so) not found in resource path (/tmp/proj-
 [20:15:13] [Render thread/INFO] (stormfang) [Stormfang-DEV] inventory open, SHOT_REQUESTED 3
 [20:15:15] [Render thread/INFO] (Minecraft) [System] [CHAT] Saved screenshot as 2026-10-15_20.15.15.png
 [20:15:19] [Render thread/INFO] (stormfang) [Stormfang-DEV] harness finished
+[20:15:23] [Render thread/INFO] (Minecraft) [System] [CHAT] Saved screenshot as 2026-10-15_20.15.23.png
+[20:15:41] [Render thread/WARN] (Minecraft) Client disconnected with reason: Disconnected
