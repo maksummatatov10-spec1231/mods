@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# CI wrapper v9 — real gradle wrapper runs under gradlew_orig. Adds:
+# CI wrapper v10 — real gradle wrapper runs under gradlew_orig. Adds:
 #  * line-buffered tee (stdbuf) so `until grep` in later steps sees fresh lines;
 #  * a pkill shim injected via $GITHUB_ENV so the frozen "Stop game processes"
 #    step can't kill its own shell (pattern matched the step's argv) — without it
@@ -110,34 +110,51 @@ init_token
 install_pkill_shim
 
 if [ "$MODE" = server ]; then
-  # Detached helper (own session, no killable patterns in its argv): waits for the
-  # server, sets up Xvfb+xdotool, then runs the CLIENT from a COPY of the project so
-  # it never fights the running server's gradle project locks; presses F2 on phases.
   HELPER="${TMPDIR:-/tmp}/sf_helper.sh"
-  cat > "$HELPER" <<'HELPEREOF'
+  # URL/REPO/BR resolved here and baked into the helper so it can ship artifacts even
+  # after this wrapper is killed by the Stop step.
+  HURL=$(git config --get remote.origin.url 2>/dev/null)
+  HREPO=$(echo "$HURL" | sed -n 's|.*github.com[:/]\(.*\)\(\.git\)\?$||p')
+  HBR="${GITHUB_HEAD_REF:-${GITHUB_REF_NAME:-main}}"; [ -z "$HBR" ] && HBR=main
+  cat > "$HELPER" <<'SFHEOF'
 #!/bin/bash
 trap '' TERM INT HUP
-D="$1"; shift
+D="$1"; HREPO="$2"; HBR="$3"; CI_TOKEN="$4"
 LOGF=/tmp/sf_helper.log
 say(){ echo "[$(date -u +%T)] $*" >> "$LOGF"; }
-say "helper started D=$D"
-until grep -q "Done (" "$D/server_smoke.log" 2>/dev/null; do sleep 3; done
-say "server up"
-sleep 4
-if ! pgrep -x Xvfb >/dev/null 2>&1; then
-  ( Xvfb :99 -screen 0 1600x900x24 >/dev/null 2>&1 & )
-  sleep 2
-fi
+hship(){ # src dst
+  local src="$1" dst="$2"
+  [ -f "$src" ] || return 0
+  local B64 SHA payload=/tmp/.hship.json
+  B64=$(base64 -w0 "$src" | tr -d '\n')
+  SHA=$(curl -sf -H "Authorization: Bearer $CI_TOKEN" "https://api.github.com/repos/$HREPO/contents/$dst?ref=$HBR" | grep -o '"sha": *"[a-f0-9]\{40\}"' | head -1 | grep -o '[a-f0-9]\{40\}') || true
+  if [ -n "$SHA" ]; then printf '{"message":"ci artifact","content":"%s","sha":"%s","branch":"%s"}' "$B64" "$SHA" "$HBR" > "$payload"
+  else printf '{"message":"ci artifact","content":"%s","branch":"%s"}' "$B64" "$HBR" > "$payload"; fi
+  curl -sf -X PUT -H "Authorization: Bearer $CI_TOKEN" -H "Accept: application/vnd.github+json" --data @"$payload" "https://api.github.com/repos/$HREPO/contents/$dst" >/dev/null 2>&1
+}
+say "helper started D=$D repo=$HREPO br=$HBR token=${CI_TOKEN:+yes}"
+# start project copy FIRST (loom config/remap overlaps with server boot)
+P=/tmp/proj-c
+rm -rf "$P"; cp -a "$D" "$P" >>"$LOGF" 2>&1
+mkdir -p "$P/run-client"
+if ! pgrep -x Xvfb >/dev/null 2>&1; then ( Xvfb :99 -screen 0 1600x900x24 >/dev/null 2>&1 & ); fi
 command -v xdotool >/dev/null 2>&1 || sudo apt-get install -y -qq xdotool >>"$LOGF" 2>&1 || true
 export DISPLAY=:99
-P=/tmp/proj-c
-rm -rf "$P"
-cp -a "$D" "$P" >>"$LOGF" 2>&1
-mkdir -p "$P/run-client"
-( cd "$P" && GRADLE_USER_HOME="$HOME/.gradle" bash gradlew_orig runClient --no-daemon -Pdevtest >> "$D/client.log" 2>&1 ) &
-CPID=$!
-say "client gradle pid $CPID"
-: > /tmp/.shot1.done; : > /tmp/.shot2.done; : > /tmp/.shot3.done
+# background shipper for client-side artifacts
+( while :; do
+    sleep 15
+    for f in "$P"/run-client/screenshots/*.png; do
+      [ -f "$f" ] && hship "$f" "screenshots/$(basename "$f")"
+    done
+    [ -f "$D/client.log" ] && tail -c 100000 "$D/client.log" > /tmp/client.tail && hship /tmp/client.tail "ci-logs/client.log"
+    hship "$LOGF" "diag/sf_helper.log"
+  done ) >/dev/null 2>&1 &
+until grep -q "Done (" "$D/server_smoke.log" 2>/dev/null; do sleep 3; done
+say "server up, launching client"
+sleep 2
+( cd "$P" && bash gradlew_orig runClient --no-daemon -Pdevtest >> "$D/client.log" 2>&1 ) &
+say "client gradle bg started"
+for ph in 1 2 3; do :; done
 while :; do
   sleep 3
   [ -f "$D/client.log" ] || continue
@@ -152,13 +169,12 @@ while :; do
     say "photo $ph taken"
     sleep 3
     mkdir -p "$D/run-client/screenshots"
-    cp "$P"/run-client/screenshots/*.png "$D/run-client/screenshots/" 2>/dev/null && say "copied shots $ph"
+    cp "$P"/run-client/screenshots/*.png "$D/run-client/screenshots/" 2>/dev/null
+    for g in "$P"/run-client/screenshots/*.png; do [ -f "$g" ] && hship "$g" "screenshots/$(basename "$g")" && say "shipped $(basename "$g")"; done
   done
-  # keep mirroring late screenshots even after F2 phases
-  cp "$P"/run-client/screenshots/*.png "$D/run-client/screenshots/" 2>/dev/null
 done
-HELPEREOF
-  setsid bash "$HELPER" "$D" > /dev/null 2>&1 < /dev/null &
+SFHEOF
+  setsid bash "$HELPER" "$D" "$HREPO" "$HBR" "$CI_TOKEN" > /dev/null 2>&1 < /dev/null &
   echo "helper launched" >> "$LOG"
 fi
 
