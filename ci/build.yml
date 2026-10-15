@@ -1,3 +1,9 @@
+# ⚙️ Stormfang CI: Build + headless-server smoke test + GitHub Release
+# Чтобы всё заработало: скопируйте ЭТОТ файл в .github/workflows/build.yml
+# (создайте вручную через веб-интерфейс — приложение Arena не имеет права
+#  создавать workflow-файлы от вашего имени).
+# После push в main сборка и тесты запустятся автоматически.
+
 name: Build & Smoke Test
 
 on:
