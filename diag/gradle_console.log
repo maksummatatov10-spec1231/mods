@@ -89,3 +89,12 @@ Fabric Loom: 1.9.2
 [16:50:55] [Worker-Main-3/INFO] (Minecraft) Preparing spawn area: 2%
 [16:50:55] [Server thread/INFO] (Minecraft) Time elapsed: 280 ms
 [16:50:55] [Server thread/INFO] (Minecraft) Done (0.897s)! For help, type "help"
+[16:51:15] [Server thread/INFO] (Minecraft) com.mojang.authlib.GameProfile@4f4f498e[id=fb6d0a65-8b71-366b-9468-a909ea49780d,name=StormBot,properties={}] lost connection: This server requires Fabric Loader and Fabric API installed on your client!
+The following registry entry namespaces may be related:
+
+stormfang
+
+
+Contact the server's administrator for more information!
+[16:51:15] [Server thread/WARN] (Minecraft) handleDisconnection() called twice
+[16:51:55] [Server thread/INFO] (Minecraft) Server empty for 60 seconds, pausing
