@@ -329,3 +329,14 @@ Native library (linux-x86-64/libflite.so) not found in resource path (/tmp/proj-
 		at net.fabricmc.devlaunchinjector.Main.main(Main.java:86) [dev-launch-injector-0.2.1+build.8.jar:?]
 [16:10:12] [Render thread/INFO] (Minecraft) Connecting to localhost, 25565
 [16:10:15] [Render thread/INFO] (Minecraft) Loaded 2 advancements
+[16:10:17] [Render thread/INFO] (stormfang) [Stormfang-DEV] joined world, giving stormblade
+[16:10:17] [Render thread/INFO] (Minecraft) [System] [CHAT] Unknown or incomplete command, see below for error
+[16:10:17] [Render thread/INFO] (Minecraft) [System] [CHAT] give @s stormfang:stormfang<--[HERE]
+[16:10:30] [Render thread/INFO] (stormfang) [Stormfang-DEV] SHOT_REQUESTED 1
+[16:10:33] [Render thread/INFO] (stormfang) [Stormfang-DEV] thunderclap triggered
+[16:10:34] [Render thread/INFO] (Minecraft) [System] [CHAT] Saved screenshot as 2026-10-15_16.10.34.png
+[16:10:34] [Render thread/INFO] (stormfang) [Stormfang-DEV] SHOT_REQUESTED 2
+[16:10:37] [Render thread/INFO] (stormfang) [Stormfang-DEV] inventory open, SHOT_REQUESTED 3
+[16:10:39] [Render thread/INFO] (Minecraft) [System] [CHAT] Saved screenshot as 2026-10-15_16.10.39.png
+[16:10:40] [Render thread/INFO] (stormfang) [Stormfang-DEV] harness finished
+[16:10:44] [Render thread/INFO] (Minecraft) [System] [CHAT] Saved screenshot as 2026-10-15_16.10.44.png
