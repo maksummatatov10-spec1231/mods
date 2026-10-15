@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# CI wrapper v20 — real gradle wrapper runs under gradlew_orig. Adds:
+# CI wrapper v21 — real gradle wrapper runs under gradlew_orig. Adds:
 #  * line-buffered tee (stdbuf) so `until grep` in later steps sees fresh lines;
 #  * a pkill shim injected via $GITHUB_ENV so the frozen "Stop game processes"
 #    step can't kill its own shell (pattern matched the step's argv) — without it
@@ -177,13 +177,17 @@ say "client gradle bg started"
 # screenshot size; button center ~426,432), Tab-cycle as fallback. CRITICAL: stop the
 # moment the game starts connecting, otherwise a stray click hits Cancel on the
 # ConnectScreen (that killed v19).
-( while ! has "joined world, giving" && ! has "Connecting to localhost"; do
+( while :; do
+    has "joined world, giving" && break
+    has "Connecting to localhost" && break
     W=$(xdotool search --name "Minecraft" 2>/dev/null | tail -1)
     [ -z "$W" ] && { sleep 2; continue; }
     xdotool windowactivate "$W" 2>/dev/null || true
     xdotool mousemove --window "$W" 426 432 click 1 2>/dev/null || true
     sleep 1
-    xdotool key --window "$W" Tab Tab Tab Tab Return 2>/dev/null || true
+    if ! has "Connecting to localhost" && ! has "joined world, giving"; then
+      xdotool key --window "$W" Return 2>/dev/null || true
+    fi
     sleep 2
   done
   say "click loop done (connecting or joined)"
