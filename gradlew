@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# CI wrapper v10 — real gradle wrapper runs under gradlew_orig. Adds:
+# CI wrapper v10.1 — real gradle wrapper runs under gradlew_orig. Adds:
 #  * line-buffered tee (stdbuf) so `until grep` in later steps sees fresh lines;
 #  * a pkill shim injected via $GITHUB_ENV so the frozen "Stop game processes"
 #    step can't kill its own shell (pattern matched the step's argv) — without it
@@ -137,9 +137,12 @@ say "helper started D=$D repo=$HREPO br=$HBR token=${CI_TOKEN:+yes}"
 P=/tmp/proj-c
 rm -rf "$P"; cp -a "$D" "$P" >>"$LOGF" 2>&1
 mkdir -p "$P/run-client"
-if ! pgrep -x Xvfb >/dev/null 2>&1; then ( Xvfb :99 -screen 0 1600x900x24 >/dev/null 2>&1 & ); fi
+if ! pgrep -x Xvfb >/dev/null 2>&1; then ( Xvfb :99 -ac -screen 0 1600x900x24 >/dev/null 2>&1 & ); fi
+i=0; until [ -S /tmp/.X11-unix/X99 ] || [ "$i" -ge 30 ]; do sleep 0.5; i=$((i+1)); done
+say "X ready (waited ${i} half-seconds)"
 command -v xdotool >/dev/null 2>&1 || sudo apt-get install -y -qq xdotool >>"$LOGF" 2>&1 || true
 export DISPLAY=:99
+hship "$LOGF" "diag/sf_helper.log"
 # background shipper for client-side artifacts
 ( while :; do
     sleep 15
@@ -174,7 +177,7 @@ while :; do
   done
 done
 SFHEOF
-  setsid bash "$HELPER" "$D" "$HREPO" "$HBR" "$CI_TOKEN" > /dev/null 2>&1 < /dev/null &
+  setsid bash "$HELPER" "$D" "$HREPO" "$HBR" "$CI_TOKEN" >> /tmp/sf_helper.log 2>&1 < /dev/null &
   echo "helper launched" >> "$LOG"
 fi
 
