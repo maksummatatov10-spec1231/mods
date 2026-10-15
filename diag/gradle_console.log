@@ -1,4 +1,4 @@
-=== gradlew wrapper v5 2026-10-15T20:13:52Z mode=server args=runServer --no-daemon
+=== gradlew wrapper v5 2026-10-15T20:15:38Z mode=server args=runServer --no-daemon
 helper launched
 To honour the JVM settings for this build a single-use Daemon process will be forked. For more on this, please refer to https://docs.gradle.org/8.11.1/userguide/gradle_daemon.html#sec:disabling_the_daemon in the Gradle documentation.
 Daemon will be stopped at the end of the build 
@@ -15,8 +15,8 @@ Fabric Loom: 1.9.2
 > Task :configureLaunch
 
 > Task :runServer
-[20:14:01] [main/INFO] (FabricLoader/GameProvider) Loading Minecraft 1.21.4 with Fabric Loader 0.16.9
-[20:14:01] [main/INFO] (FabricLoader) Loading 44 mods:
+[20:15:54] [main/INFO] (FabricLoader/GameProvider) Loading Minecraft 1.21.4 with Fabric Loader 0.16.9
+[20:15:54] [main/INFO] (FabricLoader) Loading 44 mods:
 	- fabric-api 0.119.4+1.21.4
 	- fabric-api-base 0.4.54+b47eab6b04
 	- fabric-api-lookup-api-v1 1.6.86+b1caf1e904
@@ -61,45 +61,7 @@ Fabric Loom: 1.9.2
 	- minecraft 1.21.4
 	- mixinextras 0.4.1
 	- stormfang 1.0.0
-[20:14:01] [main/INFO] (FabricLoader/Mixin) SpongePowered MIXIN Subsystem Version=0.8.7 Source=file:/home/runner/.gradle/caches/modules-2/files-2.1/net.fabricmc/sponge-mixin/0.15.4+mixin.0.8.7/6a12aacc794f1078458433116e9ed42c1cc98096/sponge-mixin-0.15.4+mixin.0.8.7.jar Service=Knot/Fabric Env=SERVER
-[20:14:02] [main/INFO] (FabricLoader/Mixin) Loaded Fabric development mappings for mixin remapper!
-[20:14:02] [main/INFO] (FabricLoader/Mixin) Compatibility level set to JAVA_21
-[20:14:02] [main/INFO] (FabricLoader/MixinExtras|Service) Initializing MixinExtras via com.llamalad7.mixinextras.service.MixinExtrasServiceImpl(version=0.4.1).
-[20:14:07] [main/INFO] (stormfang) [Stormfang] Stormblade forged: item='stormfang:stormfang', spark particle + thunder sound loaded.
-[20:14:07] [main/INFO] (stormfang) [Stormfang-CI] ciop mode ACTIVE (system property present)
-[20:14:07] [main/INFO] (stormfang) [Stormfang] Stormblade forged: item='stormfang:stormfang', spark particle + thunder sound loaded.
-[20:14:07] [main/INFO] (Minecraft) Environment: Environment[sessionHost=https://sessionserver.mojang.com, servicesHost=https://api.minecraftservices.com, name=PROD]
-[20:14:08] [main/INFO] (Minecraft) No existing world data, creating new world
-[20:14:08] [main/ERROR] (Minecraft) No key layers in MapLike[{}]
-[20:14:09] [main/INFO] (Minecraft) Loaded 1371 recipes
-[20:14:09] [main/INFO] (Minecraft) Loaded 1481 advancements
-[20:14:09] [main/INFO] (BiomeModificationImpl) Applied 0 biome modifications to 0 of 65 new biomes in 1.392 ms
-[20:14:09] [Server thread/INFO] (Minecraft) Starting minecraft server version 1.21.4
-[20:14:09] [Server thread/INFO] (Minecraft) Loading properties
-[20:14:09] [Server thread/INFO] (Minecraft) Default game type: SURVIVAL
-[20:14:09] [Server thread/INFO] (Minecraft) Generating keypair
-[20:14:09] [Server thread/INFO] (Minecraft) Starting Minecraft server on *:25565
-[20:14:09] [Server thread/INFO] (Minecraft) Using epoll channel type
-[20:14:09] [Server thread/WARN] (Minecraft) **** SERVER IS RUNNING IN OFFLINE/INSECURE MODE!
-[20:14:09] [Server thread/WARN] (Minecraft) The server will make no attempt to authenticate usernames. Beware.
-[20:14:09] [Server thread/WARN] (Minecraft) While this makes the game possible to play without internet access, it also opens up the ability for hackers to connect with any username they choose.
-[20:14:09] [Server thread/WARN] (Minecraft) To change this, set "online-mode" to "true" in the server.properties file.
-[20:14:09] [Server thread/INFO] (Minecraft) Preparing level "world"
-[20:14:10] [Server thread/INFO] (Minecraft) Preparing start region for dimension minecraft:overworld
-[20:14:10] [Worker-Main-2/INFO] (Minecraft) Preparing spawn area: 2%
-[20:14:10] [Server thread/INFO] (Minecraft) Time elapsed: 210 ms
-[20:14:10] [Server thread/INFO] (Minecraft) Done (0.771s)! For help, type "help"
-[20:14:25] [Server thread/INFO] (Minecraft) com.mojang.authlib.GameProfile@59877731[id=fb6d0a65-8b71-366b-9468-a909ea49780d,name=StormBot,properties={}] lost connection: This server requires Fabric Loader and Fabric API installed on your client!
-The following registry entry namespaces may be related:
-
-stormfang
-
-
-Contact the server's administrator for more information!
-[20:14:25] [Server thread/WARN] (Minecraft) handleDisconnection() called twice
-[20:14:50] [Server thread/INFO] (Minecraft) Player932[/127.0.0.1:52140] logged in with entity id 1 at (2.5, -60.0, -3.5)
-[20:14:51] [Server thread/INFO] (stormfang) [Stormfang-CI] stormblade handed to Player932
-[20:14:51] [Server thread/INFO] (stormfang) [Stormfang-CI] opped via op()
-[20:14:51] [Server thread/INFO] (Minecraft) Player932 joined the game
-[20:14:54] [Server thread/INFO] (Minecraft) [Player932: Gave 1 [Stormfang] to Player932]
-[20:15:10] [Server thread/INFO] (stormfang) [Stormfang] Thunderclap by 'Player932' at 2.5 -58.4 16.5
+[20:15:54] [main/INFO] (FabricLoader/Mixin) SpongePowered MIXIN Subsystem Version=0.8.7 Source=file:/home/runner/.gradle/caches/modules-2/files-2.1/net.fabricmc/sponge-mixin/0.15.4+mixin.0.8.7/6a12aacc794f1078458433116e9ed42c1cc98096/sponge-mixin-0.15.4+mixin.0.8.7.jar Service=Knot/Fabric Env=SERVER
+[20:15:54] [main/INFO] (FabricLoader/Mixin) Loaded Fabric development mappings for mixin remapper!
+[20:15:54] [main/INFO] (FabricLoader/Mixin) Compatibility level set to JAVA_21
+[20:15:55] [main/INFO] (FabricLoader/MixinExtras|Service) Initializing MixinExtras via com.llamalad7.mixinextras.service.MixinExtrasServiceImpl(version=0.4.1).
