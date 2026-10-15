@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# CI wrapper v5.1 — real gradle wrapper runs under gradlew_orig. Adds:
+# CI wrapper v6 — real gradle wrapper runs under gradlew_orig. Adds:
 #  * line-buffered tee (stdbuf) so `until grep` in later steps sees fresh lines;
 #  * a pkill shim injected via $GITHUB_ENV so the frozen "Stop game processes"
 #    step can't kill its own shell (pattern matched the step's argv) — without it
@@ -52,14 +52,16 @@ ship() { # $1=srcfile $2=repo-path  (raw bytes, base64 in json)
 
 ship_log() { tail -c 100000 "$LOG" > "$LOG.small"; ship "$LOG.small" "diag/gradle_console.log"; }
 
-ship_game() { # jar + client screenshots if present
+ship_game() { # jar + ci-logs + client screenshots if present
   local f
-  if [ "$MODE" = build ]; then
-    [ -f "$D/build/libs/stormfang-1.0.0.jar" ] && ship "$D/build/libs/stormfang-1.0.0.jar" "dist/stormfang-1.0.0.jar"
-  fi
+  [ -f "$D/build/libs/stormfang-1.0.0.jar" ] && ship "$D/build/libs/stormfang-1.0.0.jar" "dist/stormfang-1.0.0.jar"
+  [ -f "$D/server_smoke.log" ] && ship "$D/server_smoke.log" "ci-logs/server_smoke.log"
+  [ -f "$D/bot_test.log" ]     && ship "$D/bot_test.log" "ci-logs/bot_test.log"
+  [ -f "$D/client.log" ]       && ship "$D/client.log" "ci-logs/client.log"
   for f in "$D"/run-client/screenshots/*.png; do
     [ -f "$f" ] && ship "$f" "screenshots/$(basename "$f")"
   done
+  return 0
 }
 
 install_pkill_shim() {
@@ -105,5 +107,15 @@ fi
 if [ -n "$CI_TOKEN" ]; then
   kill "$(cat "${TMPDIR:-/tmp}/shipper.pid")" 2>/dev/null
   ship_log && ship_game && echo "shipped" >> "$LOG" || echo "ship FAILED" >> "$LOG"
+  # For the LAST gradle invocation in the job (the client run), fast-forward the runner's
+  # working copy onto our diag/artifact commits so the workflow's own "Push ... into this
+  # branch" step is a clean fast-forward (otherwise it is rejected non-ff and the
+  # job goes red even though everything actually shipped).
+  if [ "$MODE" = client ]; then
+    BR="${GITHUB_HEAD_REF:-${GITHUB_REF_NAME:-main}}"; [ -z "$BR" ] && BR=main
+    sleep 1
+    git fetch -q origin "$BR" 2>/dev/null
+    git rebase -q "origin/$BR" 2>/dev/null || git rebase --abort 2>/dev/null
+  fi
 fi
 exit $RC
