@@ -340,3 +340,4 @@ Native library (linux-x86-64/libflite.so) not found in resource path (/tmp/proj-
 [16:10:39] [Render thread/INFO] (Minecraft) [System] [CHAT] Saved screenshot as 2026-10-15_16.10.39.png
 [16:10:40] [Render thread/INFO] (stormfang) [Stormfang-DEV] harness finished
 [16:10:44] [Render thread/INFO] (Minecraft) [System] [CHAT] Saved screenshot as 2026-10-15_16.10.44.png
+[16:10:57] [Render thread/WARN] (Minecraft) Client disconnected with reason: Server closed
