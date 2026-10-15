@@ -1,4 +1,4 @@
-[19:57:19] [main/WARN] (FabricLoader/Knot) Class path entries reference missing files: /tmp/proj-c/build/resources/client - the game may not load properly!
+y not load properly!
 [19:57:19] [main/INFO] (FabricLoader/GameProvider) Loading Minecraft 1.21.4 with Fabric Loader 0.16.9
 [19:57:20] [main/INFO] (FabricLoader) Loading 55 mods:
 	- fabric-api 0.119.4+1.21.4
@@ -323,3 +323,8 @@ Native library (linux-x86-64/libflite.so) not found in resource path (/tmp/proj-
 [19:57:57] [Render thread/INFO] (stormfang) [Stormfang-DEV] SHOT_REQUESTED 1
 [19:58:00] [Render thread/INFO] (stormfang) [Stormfang-DEV] thunderclap triggered
 [19:58:01] [Render thread/INFO] (stormfang) [Stormfang-DEV] SHOT_REQUESTED 2
+[19:58:02] [Render thread/INFO] (Minecraft) [System] [CHAT] Saved screenshot as 2026-10-15_19.58.02.png
+[19:58:04] [Render thread/INFO] (stormfang) [Stormfang-DEV] inventory open, SHOT_REQUESTED 3
+[19:58:08] [Render thread/INFO] (Minecraft) [System] [CHAT] Saved screenshot as 2026-10-15_19.58.08.png
+[19:58:10] [Render thread/INFO] (stormfang) [Stormfang-DEV] harness finished
+[19:58:16] [Render thread/INFO] (Minecraft) [System] [CHAT] Saved screenshot as 2026-10-15_19.58.16.png
