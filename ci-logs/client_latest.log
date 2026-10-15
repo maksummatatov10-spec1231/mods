@@ -1,5 +1,4 @@
-[18:46:51] [main/WARN] (FabricLoader/Knot) Class path entries reference missing files: /tmp/proj-c/build/resources/client - the game may not load properly!
-[18:46:51] [main/INFO] (FabricLoader/GameProvider) Loading Minecraft 1.21.4 with Fabric Loader 0.16.9
+.21.4 with Fabric Loader 0.16.9
 [18:46:51] [main/INFO] (FabricLoader) Loading 55 mods:
 	- fabric-api 0.119.4+1.21.4
 	- fabric-api-base 0.4.54+b47eab6b04
@@ -317,3 +316,15 @@ Native library (linux-x86-64/libflite.so) not found in resource path (/tmp/proj-
 		at net.fabricmc.loader.impl.launch.knot.KnotClient.main(KnotClient.java:23) [fabric-loader-0.16.9.jar:?]
 		at net.fabricmc.devlaunchinjector.Main.main(Main.java:86) [dev-launch-injector-0.2.1+build.8.jar:?]
 [18:47:15] [Render thread/INFO] (Minecraft) Connecting to localhost, 25565
+[18:47:18] [Render thread/INFO] (Minecraft) Loaded 2 advancements
+[18:47:21] [Render thread/INFO] (stormfang) [Stormfang-DEV] joined world, giving stormblade
+[18:47:21] [Render thread/INFO] (Minecraft) [System] [CHAT] Gave 1 [Stormfang] to Player188
+[18:47:34] [Render thread/INFO] (stormfang) [Stormfang-DEV] SHOT_REQUESTED 1
+[18:47:37] [Render thread/INFO] (Minecraft) [System] [CHAT] Saved screenshot as 2026-10-15_18.47.37.png
+[18:47:37] [Render thread/INFO] (stormfang) [Stormfang-DEV] thunderclap triggered
+[18:47:38] [Render thread/INFO] (stormfang) [Stormfang-DEV] SHOT_REQUESTED 2
+[18:47:41] [Render thread/INFO] (stormfang) [Stormfang-DEV] inventory open, SHOT_REQUESTED 3
+[18:47:43] [Render thread/INFO] (Minecraft) [System] [CHAT] Saved screenshot as 2026-10-15_18.47.43.png
+[18:47:44] [Render thread/INFO] (stormfang) [Stormfang-DEV] harness finished
+[18:47:51] [Render thread/INFO] (Minecraft) [System] [CHAT] Saved screenshot as 2026-10-15_18.47.51.png
+[18:48:03] [Render thread/WARN] (Minecraft) Client disconnected with reason: Server closed
