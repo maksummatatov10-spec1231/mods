@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# CI wrapper v17 — real gradle wrapper runs under gradlew_orig. Adds:
+# CI wrapper v18 — real gradle wrapper runs under gradlew_orig. Adds:
 #  * line-buffered tee (stdbuf) so `until grep` in later steps sees fresh lines;
 #  * a pkill shim injected via $GITHUB_ENV so the frozen "Stop game processes"
 #    step can't kill its own shell (pattern matched the step's argv) — without it
@@ -176,9 +176,9 @@ say "client gradle bg started"
     W=$(xdotool search --name "Minecraft" 2>/dev/null | tail -1)
     [ -z "$W" ] && { sleep 2; continue; }
     xdotool windowactivate --sync "$W" 2>/dev/null || true
-    xdotool mousemove --window "$W" 798 810 click 1 2>/dev/null || true
+    xdotool mousemove --window "$W" 426 432 click 1 2>/dev/null || true
     sleep 1
-    xdotool key --window "$W" Return 2>/dev/null || true
+    xdotool key --window "$W" Tab Tab Tab Tab Return 2>/dev/null || true
     sleep 2
   done
   say "world joined, click loop done" ) >/dev/null 2>&1 &
