@@ -74,3 +74,12 @@ Please make sure to read and understand the following license:
 > Task :test NO-SOURCE
 > Task :validateAccessWidener NO-SOURCE
 > Task :check UP-TO-DATE
+> Task :remapJar
+> Task :remapSourcesJar
+> Task :assemble
+> Task :build
+gradle/actions: Writing build results to /home/runner/work/_temp/.gradle-actions/build-results/__run_2-1792077479456.json
+
+BUILD SUCCESSFUL in 47s
+8 actionable tasks: 8 executed
+=== exit code: 0 2026-10-15T15:18:45Z
