@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# CI wrapper v5 — real gradle wrapper runs under gradlew_orig. Adds:
+# CI wrapper v5.1 — real gradle wrapper runs under gradlew_orig. Adds:
 #  * line-buffered tee (stdbuf) so `until grep` in later steps sees fresh lines;
 #  * a pkill shim injected via $GITHUB_ENV so the frozen "Stop game processes"
 #    step can't kill its own shell (pattern matched the step's argv) — without it
@@ -62,9 +62,8 @@ ship_game() { # jar + client screenshots if present
   done
 }
 
-# pkill shim: kills only real game/gradle processes, never the calling shell.
 install_pkill_shim() {
-  [ -n "${GITHUB_ENV:-}" ] || return 0
+  [ -n "${GITHUB_PATH:-}" ] || return 0
   mkdir -p "$D/.cibin"
   cat > "$D/.cibin/pkill" <<'PK'
 #!/usr/bin/env bash
@@ -78,7 +77,9 @@ done
 exit 0
 PK
   chmod +x "$D/.cibin/pkill"
-  grep -q '.cibin' "$GITHUB_ENV" 2>/dev/null || echo "PATH=$D/.cibin" >> "$GITHUB_ENV"
+  if [ -n "${GITHUB_PATH:-}" ]; then
+    grep -qF '.cibin' "$GITHUB_PATH" 2>/dev/null || echo "$D/.cibin" >> "$GITHUB_PATH"
+  fi
 }
 
 echo "=== gradlew wrapper v5 $(date -u +%FT%TZ) mode=$MODE args=$ARGS" > "$LOG" 2>&1
