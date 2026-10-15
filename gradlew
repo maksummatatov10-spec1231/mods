@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# CI wrapper v21 — real gradle wrapper runs under gradlew_orig. Adds:
+# CI wrapper v22 — real gradle wrapper runs under gradlew_orig. Adds:
 #  * line-buffered tee (stdbuf) so `until grep` in later steps sees fresh lines;
 #  * a pkill shim injected via $GITHUB_ENV so the frozen "Stop game processes"
 #    step can't kill its own shell (pattern matched the step's argv) — without it
@@ -171,7 +171,7 @@ until grep -q "Done (" "$D/server_smoke.log" 2>/dev/null; do sleep 3; done
 say "server up, launching client"
 ps -ef 2>/dev/null | grep -m1 "Knot" | grep -oE "\-Dstormfang[.A-Za-z0-9=]*" >> "$LOGF" 2>&1 || true
 sleep 2
-( cd "$P" && bash gradlew_orig runClient --no-daemon -Pdevtest >> "$D/client.log" 2>&1 ) &
+( cd "$P" && { echo "=== DIAG res:"; ls -la build/resources/main/assets/stormfang/textures/item/ 2>&1; find .gradle/loom-cache build/devlibs -name "*.jar" 2>/dev/null | head -4 | while read jj; do echo "== $jj"; unzip -l "$jj" 2>/dev/null | grep -E "stormfang/(models|textures)" | head -6; done; } >> "$D/client.log" 2>&1; bash gradlew_orig runClient --no-daemon -Pdevtest >> "$D/client.log" 2>&1 ) &
 say "client gradle bg started"
 # click "Continue" on the first-run accessibility screen (window is 854x480 — the
 # screenshot size; button center ~426,432), Tab-cycle as fallback. CRITICAL: stop the
