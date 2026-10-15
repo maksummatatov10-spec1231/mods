@@ -1,6 +1,7 @@
 package net.arena.stormfang.client;
 
 import net.fabricmc.api.ClientModInitializer;
+import com.mojang.blaze3d.platform.InputConstants;
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
 import net.fabricmc.loader.api.FabricLoader;
 import net.arena.stormfang.StormfangMod;
@@ -33,16 +34,14 @@ public class StormfangDevHarness implements ClientModInitializer {
 					}
 				}
 				if (tick == 90) {
-					if (client.player != null && !client.player.getMainHandItem().isEmpty()) {
-						client.player.inventory.selectedSlot = 0;
-					}
+					// 'give' lands in the already-selected hotbar slot -> sword is in hand
 					// pose: first person, sword drawn
 					StormfangMod.LOGGER.info("[Stormfang-DEV] SHOT_REQUESTED 1");
 				}
 				if (tick == 150) {
 					// right-click: cast Thunderclap (server spawns lightning + particles)
 					if (client.options.keyUse != null) {
-						client.options.keyUse.click(client.options.keyUse.getKey());
+						client.options.keyUse.click(InputConstants.getKey(1, 1)); // mouse right-click
 						StormfangMod.LOGGER.info("[Stormfang-DEV] thunderclap triggered");
 					}
 				}
@@ -52,7 +51,7 @@ public class StormfangDevHarness implements ClientModInitializer {
 				}
 				if (tick == 220) {
 					if (client.options.keyInventory != null) {
-						client.options.keyInventory.click(client.options.keyInventory.getKey());
+						client.options.keyInventory.click(InputConstants.getKey(0, 69)); // keyboard E
 					}
 					StormfangMod.LOGGER.info("[Stormfang-DEV] inventory open, SHOT_REQUESTED 3");
 				}
