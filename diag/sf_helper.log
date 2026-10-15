@@ -27,3 +27,4 @@ No VM guests are running outdated hypervisor (qemu) binaries on this host.
 [20:16:09] server up, launching client
 -Dstormfang.ciop=1
 [20:16:11] client gradle bg started
+[20:16:59] click loop done (connecting or joined)
