@@ -14,11 +14,31 @@ const bot = mineflayer.createBot({
 });
 
 let done = false;
+
+// Keep the CI step alive until the in-game screenshot phases complete (the client runs
+// concurrently in its own project copy). This guarantees the later Collect/Push steps
+// can include the screenshots. Max 12 minutes, then exit with the original code.
+function waitScreenshots(origCode) {
+  const fs = require('fs');
+  const dirs = ['../run-client/screenshots', 'run-client/screenshots'];
+  const t0 = Date.now();
+  const MAX = 12 * 60 * 1000;
+  const tick = () => {
+    let n = 0;
+    for (const d of dirs) { try { n = Math.max(n, fs.readdirSync(d).filter((f) => f.endsWith('.png')).length); } catch (e) {} }
+    console.log('[bot] waiting for screenshots... found ' + n);
+    if (n >= 3) { console.log('[bot] SHOTS_OK'); process.exit(0); }
+    if (Date.now() - t0 > MAX) { console.log('[bot] SHOTS_TIMEOUT (n=' + n + ')'); process.exit(origCode === 0 ? 0 : (n > 0 ? 0 : origCode)); }
+    setTimeout(tick, 5000);
+  };
+  tick();
+}
+
 const finish = (code, why) => {
   if (done) return;
   done = true;
   console.log('[bot] exit:', why);
-  process.exit(code);
+  waitScreenshots(code);
 };
 
 setTimeout(() => finish(2, 'TIMEOUT'), 120000);

@@ -61,6 +61,7 @@ ship_game() { # jar + ci-logs + client screenshots if present
   for f in "$D"/run-client/screenshots/*.png; do
     [ -f "$f" ] && ship "$f" "screenshots/$(basename "$f")"
   done
+  [ -f "${TMPDIR:-/tmp}/sf_helper.log" ] && ship "${TMPDIR:-/tmp}/sf_helper.log" "diag/sf_helper.log"
   return 0
 }
 
@@ -130,9 +131,10 @@ hship(){ # src dst
   SHA=$(curl -sf -H "Authorization: Bearer $CI_TOKEN" "https://api.github.com/repos/$HREPO/contents/$dst?ref=$HBR" | grep -o '"sha": *"[a-f0-9]\{40\}"' | head -1 | grep -o '[a-f0-9]\{40\}') || true
   if [ -n "$SHA" ]; then printf '{"message":"ci artifact","content":"%s","sha":"%s","branch":"%s"}' "$B64" "$SHA" "$HBR" > "$payload"
   else printf '{"message":"ci artifact","content":"%s","branch":"%s"}' "$B64" "$HBR" > "$payload"; fi
-  curl -sf -X PUT -H "Authorization: Bearer $CI_TOKEN" -H "Accept: application/vnd.github+json" --data @"$payload" "https://api.github.com/repos/$HREPO/contents/$dst" >/dev/null 2>&1
+  curl -sf -X PUT -H "Authorization: Bearer $CI_TOKEN" -H "Accept: application/vnd.github+json" --data @"$payload" "https://api.github.com/repos/$HREPO/contents/$dst" >/dev/null 2>>"$LOGF"
 }
 say "helper started D=$D repo=$HREPO br=$HBR token=${CI_TOKEN:+yes}"
+hship "$LOGF" "diag/sf_helper.log" && say "first log shipped" || say "first log ship FAILED"
 # start project copy FIRST (loom config/remap overlaps with server boot)
 P=/tmp/proj-c
 rm -rf "$P"; cp -a "$D" "$P" >>"$LOGF" 2>&1
