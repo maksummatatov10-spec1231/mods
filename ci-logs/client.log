@@ -25,3 +25,18 @@ drwxr-xr-x 10 runner runner  4096 Oct 15 19:29 ..
       667  2026-10-15 19:27   assets/stormfang/textures/particle/storm_spark.png
      1085  2026-10-15 19:27   fabric.mod.json
 To honour the JVM settings for this build a single-use Daemon process will be forked. For more on this, please refer to https://docs.gradle.org/8.11.1/userguide/gradle_daemon.html#sec:disabling_the_daemon in the Gradle documentation.
+Daemon will be stopped at the end of the build 
+
+> Configure project :
+Fabric Loom: 1.9.2
+
+> Task :compileJava
+> Task :processResources
+> Task :classes
+> Task :compileClientJava
+> Task :processClientResources NO-SOURCE
+> Task :clientClasses
+> Task :generateLog4jConfig
+> Task :generateRemapClasspath
+> Task :generateDLIConfig
+> Task :configureLaunch
