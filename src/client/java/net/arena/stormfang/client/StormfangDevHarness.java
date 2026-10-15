@@ -20,6 +20,8 @@ public class StormfangDevHarness implements ClientModInitializer {
 	private int tick;
 	private int menuTick;
 	private boolean onboardingHandled;
+	private boolean connectAttempted;
+	private int connectTick = -1;
 
 	@Override
 	public void onInitializeClient() {
@@ -34,16 +36,8 @@ public class StormfangDevHarness implements ClientModInitializer {
 				// first-run "accessibility" / title screens block quickPlay until dismissed:
 				// close any such screen ourselves so the client proceeds into the world.
 				menuTick++;
-				if (!onboardingHandled && menuTick > 30 && client.screen != null) {
-					String cn = client.screen.getClass().getSimpleName();
-					if (cn.contains("Accessibility")) {
-						client.setScreen(null);
-						onboardingHandled = true;
-						StormfangMod.LOGGER.info("[Stormfang-DEV] dismissed first-run screen {}", cn);
-					}
-				} else if (onboardingHandled && menuTick == 60 && client.level == null) {
-					// quickPlay's one-shot task got consumed while the dialog was up —
-					// so just do what it would have done: connect to the CI server.
+				if (onboardingHandled && !connectAttempted && menuTick >= connectTick) {
+					connectAttempted = true;
 					// mapping-agnostic: find the "launchMultiplayer/startMultiplayerPlay"-style
 					// method on Minecraft(String host, int port) and invoke it.
 					boolean ok = false;
@@ -66,6 +60,16 @@ public class StormfangDevHarness implements ClientModInitializer {
 						StormfangMod.LOGGER.warn("[Stormfang-DEV] no multiplayer launcher found");
 					}
 				}
+				if (!onboardingHandled && menuTick > 30 && client.screen != null) {
+					String cn = client.screen.getClass().getSimpleName();
+					if (cn.contains("Accessibility")) {
+						client.setScreen(null);
+						onboardingHandled = true;
+						connectTick = menuTick + 20;
+						StormfangMod.LOGGER.info("[Stormfang-DEV] dismissed first-run screen {}", cn);
+					}
+				}
+
 				return;
 			}
 			tick++;
