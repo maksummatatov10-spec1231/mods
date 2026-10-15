@@ -121,3 +121,33 @@ Fabric Loom: 1.9.2
 [20:08:51] [main/INFO] (FabricLoader/Mixin) Compatibility level set to JAVA_21
 [20:08:52] [main/INFO] (FabricLoader/MixinExtras|Service) Initializing MixinExtras via com.llamalad7.mixinextras.service.MixinExtrasServiceImpl(version=0.4.1).
 [20:08:53] [Datafixer Bootstrap/INFO] (Minecraft) 243 Datafixer optimizations took 383 milliseconds
+[20:08:58] [Render thread/INFO] (Minecraft) Environment: Environment[sessionHost=https://sessionserver.mojang.com, servicesHost=https://api.minecraftservices.com, name=PROD]
+[20:08:58] [Render thread/INFO] (Minecraft) Setting user: Player370
+[20:08:58] [Render thread/INFO] (stormfang) [Stormfang] Stormblade forged: item='stormfang:stormfang', spark particle + thunder sound loaded.
+[20:08:58] [Render thread/INFO] (stormfang) [Stormfang] Stormblade forged: item='stormfang:stormfang', spark particle + thunder sound loaded.
+[20:08:58] [Render thread/INFO] (Indigo) [Indigo] Registering Indigo renderer!
+[20:08:58] [Render thread/ERROR] (Minecraft) Failed to load options
+java.lang.IllegalStateException: Expected a string but was BEGIN_OBJECT at line 1 column 3 path $[0]
+See https://github.com/google/gson/blob/main/Troubleshooting.md#unexpected-json-structure
+	at knot/com.google.gson.stream.JsonReader.unexpectedTokenError(JsonReader.java:1768) ~[gson-2.11.0.jar:?]
+	at knot/com.google.gson.stream.JsonReader.nextString(JsonReader.java:917) ~[gson-2.11.0.jar:?]
+	at knot/com.google.gson.internal.bind.TypeAdapters$15.read(TypeAdapters.java:471) ~[gson-2.11.0.jar:?]
+	at knot/com.google.gson.internal.bind.TypeAdapters$15.read(TypeAdapters.java:459) ~[gson-2.11.0.jar:?]
+	at knot/com.google.gson.internal.bind.TypeAdapterRuntimeTypeWrapper.read(TypeAdapterRuntimeTypeWrapper.java:40) ~[gson-2.11.0.jar:?]
+	at knot/com.google.gson.internal.bind.CollectionTypeAdapterFactory$Adapter.read(CollectionTypeAdapterFactory.java:83) ~[gson-2.11.0.jar:?]
+	at knot/com.google.gson.internal.bind.CollectionTypeAdapterFactory$Adapter.read(CollectionTypeAdapterFactory.java:59) ~[gson-2.11.0.jar:?]
+	at knot/net.minecraft.util.GsonHelper.fromNullableJson(GsonHelper.java:544) ~[minecraft-common-d1fae903ae-1.21.4-loom.mappings.1_21_4.layered+hash.2198-v2.jar:?]
+	at knot/net.minecraft.util.GsonHelper.fromNullableJson(GsonHelper.java:560) ~[minecraft-common-d1fae903ae-1.21.4-loom.mappings.1_21_4.layered+hash.2198-v2.jar:?]
+	at knot/net.minecraft.util.GsonHelper.fromNullableJson(GsonHelper.java:578) ~[minecraft-common-d1fae903ae-1.21.4-loom.mappings.1_21_4.layered+hash.2198-v2.jar:?]
+	at knot/net.minecraft.client.Options.readListOfStrings(Options.java:1712) ~[minecraft-clientOnly-d1fae903ae-1.21.4-loom.mappings.1_21_4.layered+hash.2198-v2.jar:?]
+	at knot/net.minecraft.client.Options$2.process(Options.java:1539) ~[minecraft-clientOnly-d1fae903ae-1.21.4-loom.mappings.1_21_4.layered+hash.2198-v2.jar:?]
+	at knot/net.minecraft.client.Options.processOptions(Options.java:1382) ~[minecraft-clientOnly-d1fae903ae-1.21.4-loom.mappings.1_21_4.layered+hash.2198-v2.jar:?]
+	at knot/net.minecraft.client.Options.load(Options.java:1472) [minecraft-clientOnly-d1fae903ae-1.21.4-loom.mappings.1_21_4.layered+hash.2198-v2.jar:?]
+	at knot/net.minecraft.client.Options.<init>(Options.java:1302) [minecraft-clientOnly-d1fae903ae-1.21.4-loom.mappings.1_21_4.layered+hash.2198-v2.jar:?]
+	at knot/net.minecraft.client.Minecraft.<init>(Minecraft.java:478) [minecraft-clientOnly-d1fae903ae-1.21.4-loom.mappings.1_21_4.layered+hash.2198-v2.jar:?]
+	at knot/net.minecraft.client.main.Main.main(Main.java:250) [minecraft-clientOnly-d1fae903ae-1.21.4-loom.mappings.1_21_4.layered+hash.2198-v2.jar:?]
+	at net.fabricmc.loader.impl.game.minecraft.MinecraftGameProvider.launch(MinecraftGameProvider.java:480) [fabric-loader-0.16.9.jar:?]
+	at net.fabricmc.loader.impl.launch.knot.Knot.launch(Knot.java:74) [fabric-loader-0.16.9.jar:?]
+	at net.fabricmc.loader.impl.launch.knot.KnotClient.main(KnotClient.java:23) [fabric-loader-0.16.9.jar:?]
+	at net.fabricmc.devlaunchinjector.Main.main(Main.java:86) [dev-launch-injector-0.2.1+build.8.jar:?]
+[20:08:58] [Render thread/INFO] (Minecraft) Backend library: LWJGL version 3.3.3-snapshot
