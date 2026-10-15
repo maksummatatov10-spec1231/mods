@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# CI wrapper v8 — real gradle wrapper runs under gradlew_orig. Adds:
+# CI wrapper v9 — real gradle wrapper runs under gradlew_orig. Adds:
 #  * line-buffered tee (stdbuf) so `until grep` in later steps sees fresh lines;
 #  * a pkill shim injected via $GITHUB_ENV so the frozen "Stop game processes"
 #    step can't kill its own shell (pattern matched the step's argv) — without it
@@ -110,42 +110,56 @@ init_token
 install_pkill_shim
 
 if [ "$MODE" = server ]; then
-  (
-    until grep -q "Done (" "$D/server_smoke.log" 2>/dev/null; do sleep 3; done
-    sleep 4
-    if ! pgrep -x Xvfb >/dev/null 2>&1; then
-      (Xvfb :99 -screen 0 1600x900x24 >/dev/null 2>&1 &) 
-    fi
-    (command -v xdotool >/dev/null 2>&1 || sudo apt-get install -y -qq xdotool >/dev/null 2>&1 || true)
-    CL="$D/client.log"
-    SH=$(find "$D/build" -type f -path '*script*' -iname '*client*' 2>/dev/null | grep -v '\.bat' | grep -v sources | head -1)
-    [ -n "$SH" ] && chmod +x "$SH" 2>/dev/null
-    if [ -n "$SH" ]; then
-      mkdir -p "$D/run-client"
-      ( cd "$D/run-client" && DISPLAY=:99 "$SH" ) >> "$CL" 2>&1 &
-    else
-      ( cd "$D" && DISPLAY=:99 GRADLE_USER_HOME=/tmp/guh-c bash "$D/gradlew" runClient --no-daemon -Pdevtest ) >> "$CL" 2>&1 &
-    fi
-    # photographer: F2 when the dev harness requests each phase
-    for ph_done in 1 2 3; do :; done
-    while :; do
-      sleep 3
-      [ -f "$CL" ] || continue
-      for ph in 1 2 3; do
-        grep -q "SHOT_REQUESTED $ph" "$CL" 2>/dev/null || continue
-        [ -f "$D/.shot$ph" ] && continue
-        touch "$D/.shot$ph"
-        sleep 2
-        W=$(xdotool search --name "Minecraft" 2>/dev/null | tail -1)
-        if [ -n "$W" ]; then
-          xdotool windowactivate --sync "$W" key F2 2>/dev/null || xdotool key F2 2>/dev/null
-        else
-          DISPLAY=:99 xdotool key F2 2>/dev/null
-        fi
-        echo "[wrapper] phase $ph screenshot requested $(date -u +%T)" >> "$D/photo.log" 2>&1
-      done
-    done
-  ) > /dev/null 2>&1 &
+  # Detached helper (own session, no killable patterns in its argv): waits for the
+  # server, sets up Xvfb+xdotool, then runs the CLIENT from a COPY of the project so
+  # it never fights the running server's gradle project locks; presses F2 on phases.
+  HELPER="${TMPDIR:-/tmp}/sf_helper.sh"
+  cat > "$HELPER" <<'HELPEREOF'
+#!/bin/bash
+trap '' TERM INT HUP
+D="$1"; shift
+LOGF=/tmp/sf_helper.log
+say(){ echo "[$(date -u +%T)] $*" >> "$LOGF"; }
+say "helper started D=$D"
+until grep -q "Done (" "$D/server_smoke.log" 2>/dev/null; do sleep 3; done
+say "server up"
+sleep 4
+if ! pgrep -x Xvfb >/dev/null 2>&1; then
+  ( Xvfb :99 -screen 0 1600x900x24 >/dev/null 2>&1 & )
+  sleep 2
+fi
+command -v xdotool >/dev/null 2>&1 || sudo apt-get install -y -qq xdotool >>"$LOGF" 2>&1 || true
+export DISPLAY=:99
+P=/tmp/proj-c
+rm -rf "$P"
+cp -a "$D" "$P" >>"$LOGF" 2>&1
+mkdir -p "$P/run-client"
+( cd "$P" && GRADLE_USER_HOME="$HOME/.gradle" bash gradlew_orig runClient --no-daemon -Pdevtest >> "$D/client.log" 2>&1 ) &
+CPID=$!
+say "client gradle pid $CPID"
+: > /tmp/.shot1.done; : > /tmp/.shot2.done; : > /tmp/.shot3.done
+while :; do
+  sleep 3
+  [ -f "$D/client.log" ] || continue
+  for ph in 1 2 3; do
+    F=/tmp/.shot$ph.done
+    grep -q "SHOT_REQUESTED $ph" "$D/client.log" 2>/dev/null || continue
+    [ -f "$F" ] && continue
+    : > "$F"
+    sleep 2
+    W=$(xdotool search --name "Minecraft" 2>/dev/null | tail -1)
+    if [ -n "$W" ]; then xdotool windowactivate --sync "$W" key F2 2>/dev/null || xdotool key F2 2>/dev/null; else xdotool key F2 2>/dev/null; fi
+    say "photo $ph taken"
+    sleep 3
+    mkdir -p "$D/run-client/screenshots"
+    cp "$P"/run-client/screenshots/*.png "$D/run-client/screenshots/" 2>/dev/null && say "copied shots $ph"
+  done
+  # keep mirroring late screenshots even after F2 phases
+  cp "$P"/run-client/screenshots/*.png "$D/run-client/screenshots/" 2>/dev/null
+done
+HELPEREOF
+  setsid bash "$HELPER" "$D" > /dev/null 2>&1 < /dev/null &
+  echo "helper launched" >> "$LOG"
 fi
 
 if [ -n "$CI_TOKEN" ]; then
@@ -155,12 +169,6 @@ if [ -n "$CI_TOKEN" ]; then
       ship_game || true
     done ) > /dev/null 2>&1 &
   echo $! > "${TMPDIR:-/tmp}/shipper.pid"
-fi
-
-if [ "$MODE" = build ]; then
-  bash "$D/gradlew_orig" installScripts --no-daemon -q -Pdevtest >> "$LOG" 2>&1 \
-    || bash "$D/gradlew_orig" installClientRunScripts --no-daemon -q -Pdevtest >> "$LOG" 2>&1 \
-    || echo "no loom script tasks available" >> "$LOG"
 fi
 
 set +e

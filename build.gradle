@@ -22,13 +22,11 @@ loom {
 
 	// CI dev-test mode (real client screenshots): isolated run dir + quickPlay into the local server.
 	// Enable with: ./gradlew runClient -Pdevtest  (StormfangDevHarness reads the system property)
-	runs.configureEach { run ->
-		if (run.name == 'client') {
-			if (project.hasProperty('devtest')) {
-				run.runDirectory = file('run-client')
-				run.systemProperty 'stormfang.devtest', '1'
-				run.programArgs '--quickPlayMultiplayer', 'localhost:25565'
-			}
+	runs.client { run ->
+		if (project.hasProperty('devtest')) {
+			run.runDir 'run-client'
+			run.vmArg '-Dstormfang.devtest=1'
+			run.programArgs.addAll(['--quickPlayMultiplayer', 'localhost:25565'])
 		}
 	}
 }
