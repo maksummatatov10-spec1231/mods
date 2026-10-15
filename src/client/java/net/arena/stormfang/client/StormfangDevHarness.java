@@ -34,7 +34,7 @@ public class StormfangDevHarness implements ClientModInitializer {
 				}
 				if (tick == 90) {
 					if (client.player != null && !client.player.getMainHandItem().isEmpty()) {
-						client.player.getInventory().selectedSlot = 0;
+						client.player.inventory.selectedSlot = 0;
 					}
 					// pose: first person, sword drawn
 					StormfangMod.LOGGER.info("[Stormfang-DEV] SHOT_REQUESTED 1");
@@ -42,7 +42,7 @@ public class StormfangDevHarness implements ClientModInitializer {
 				if (tick == 150) {
 					// right-click: cast Thunderclap (server spawns lightning + particles)
 					if (client.options.keyUse != null) {
-						client.options.keyUse.click();
+						client.options.keyUse.click(client.options.keyUse.getKey());
 						StormfangMod.LOGGER.info("[Stormfang-DEV] thunderclap triggered");
 					}
 				}
@@ -52,7 +52,7 @@ public class StormfangDevHarness implements ClientModInitializer {
 				}
 				if (tick == 220) {
 					if (client.options.keyInventory != null) {
-						client.options.keyInventory.click();
+						client.options.keyInventory.click(client.options.keyInventory.getKey());
 					}
 					StormfangMod.LOGGER.info("[Stormfang-DEV] inventory open, SHOT_REQUESTED 3");
 				}
