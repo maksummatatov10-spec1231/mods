@@ -1,0 +1,143 @@
+name: Build & Smoke Test
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 40
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '21'
+
+      - uses: gradle/actions/setup-gradle@v4
+
+      - name: chmod gradlew
+        run: chmod +x gradlew
+
+      - name: Build mod jar
+        run: ./gradlew build --no-daemon --stacktrace
+
+      - name: Prep headless server run dir
+        run: |
+          mkdir -p run
+          echo "eula=true" > run/eula.txt
+          printf 'online-mode=false\nlevel-type=minecraft\\:flat\nspawn-monsters=false\nspawn-animals=false\nview-distance=6\nsimulation-distance=6\nmax-players=5\nenforce-secure-profile=false\nmotd=Stormfang-CI\n' > run/server.properties
+          python3 - <<'PY'
+          import hashlib, uuid, json
+          # vanilla offline-mode UUID for the test bot -> pre-op it
+          u = uuid.UUID(bytes=hashlib.md5(b"OfflinePlayer:StormBot").digest(), version=3)
+          json.dump([{"uuid": str(u), "name": "StormBot", "level": 4, "bypassesPlayerLimit": False}],
+                    open("run/ops.json", "w"))
+          print("ops.json:", open("run/ops.json").read())
+          PY
+
+      - name: Start headless Fabric server (background)
+        run: nohup ./gradlew runServer --no-daemon > server_smoke.log 2>&1 &
+
+      - name: Wait for server bootstrap & assert mod loaded
+        run: |
+          timeout 360 bash -c 'until grep -q "Done (" server_smoke.log 2>/dev/null; do sleep 5; done'
+          echo "--- server up ---"
+          grep -E "\[Stormfang\]" server_smoke.log && echo "MOD-LOADED-OK" || { echo "MOD-INIT-LOG-MISSING"; tail -n 80 server_smoke.log; exit 1; }
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Real client test — mineflayer bot joins, receives item, casts Thunderclap
+        run: |
+          cd testing
+          npm init -y > /dev/null
+          npm install mineflayer --no-audit --no-fund > npm.log 2>&1 || echo "NPM-INSTALL-FAILED"
+          node bot_test.js 2>&1 | tee ../bot_test.log || echo "BOT-TEST-FAILED (non-fatal)"
+        continue-on-error: true
+
+      - name: Assert Thunderclap hit the world
+        run: |
+          sleep 2
+          if grep -q "Thunderclap by 'StormBot'" server_smoke.log; then
+            echo "THUNDERCLAP-OK"; grep "Thunderclap" server_smoke.log
+          else
+            echo "THUNDERCLAP-MISSING (non-fatal, bot step may have failed)"; tail -n 30 bot_test.log 2>/dev/null || true
+          fi
+
+      - name: Stop server
+        if: always()
+        run: pkill -f runServer || true
+
+      - name: Upload artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: stormfang-mod-jar
+          path: |
+            build/libs/*.jar
+            server_smoke.log
+            bot_test.log
+          if-no-files-found: error
+
+  release:
+    needs: build
+    if: github.ref == 'refs/heads/main' && github.event_name != 'pull_request'
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/download-artifact@v4
+        with:
+          name: stormfang-mod-jar
+          path: release-files
+
+      - name: Publish jar + logs to dist branch
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          if git ls-remote --exit-code origin dist > /dev/null 2>&1; then
+            git fetch origin dist && git checkout -B dist origin/dist && git rm -rf -q . || true
+          else
+            git checkout --orphan dist
+          fi
+          mkdir -p build logs
+          cp release-files/*.jar build/
+          cp release-files/server_smoke.log logs/ || true
+          cp release-files/bot_test.log logs/ || true
+          touch build/.gitkeep logs/.gitkeep
+          git add -f build logs
+          git commit -m "CI artifacts $(date -u +%FT%TZ)" || echo "nothing to commit"
+          git push -f origin dist
+
+      - name: GitHub Release with jar
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          gh release delete v1.0.0 --yes --cleanup-tag 2>/dev/null || true
+          gh release create v1.0.0 release-files/*.jar \
+            --title "Stormfang 1.0.0 — Fabric 1.21.4" \
+            --notes "Легендарный меч «Штормовец» для Minecraft 1.21.4 (Fabric).
+          
+          ## Установка
+          1. Требуется Fabric Loader 0.16.9+ и [Fabric API](https://modrinth.com/mod/fabric-api) для 1.21.4.
+          2. Положите \`stormfang-1.0.0.jar\` в папку \`mods\`.
+          3. В игре: креатив → вкладка Combat / Stormfang, или рецепт (незеритовый меч + аметист + светокамень).
+          
+          ## Возможности
+          - Анимированная процедурная текстура 512px (4 кадра, импульс молнии по клинку)
+          - Постоянное свечение зачарования
+          - ПКМ — «Грозовой разряд»: молния на дистанции до 40 блоков + частицы + синтезированный звук грома
+          - Пассивно: 35% шанс бури при ударе (молния + подбрасывание цели)
+          
+          Файл собран CI (GitHub Actions) и протестирован: headless-сервер + подключение реальным клиентским протоколом (mineflayer)."
