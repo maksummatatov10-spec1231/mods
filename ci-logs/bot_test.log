@@ -1,9 +1,3 @@
 [bot] exit: KICKED {"type":"compound","value":{"extra":{"type":"list","value":{"type":"compound","value":[{"color":{"type":"string","value":"green"},"text":{"type":"string","value":"Fabric Loader and Fabric API"}},{"":{"type":"string","value":" installed on your client!"}},{"":{"type":"string","value":"\n"}},{"extra":{"type":"list","value":{"type":"compound","value":[{"color":{"type":"string","value":"yellow"},"text":{"type":"string","value":"stormfang"}},{"":{"type":"string","value":"\n"}}]}},"text":{"type":"string","value":"The following registry entry namespaces may be related:\n\n"}},{"":{"type":"string","value":"\n"}},{"":{"type":"string","value":"\n"}},{"color":{"type":"string","value":"gold"},"text":{"type":"string","value":"Contact the server's administrator for more information!"}}]}},"text":{"type":"string","value":"This server requires "}}}
 [bot] waiting for screenshots... found 0
 [bot] waiting for screenshots... found 0
-[bot] waiting for screenshots... found 0
-[bot] waiting for screenshots... found 0
-[bot] waiting for screenshots... found 0
-[bot] waiting for screenshots... found 0
-[bot] waiting for screenshots... found 0
-[bot] waiting for screenshots... found 0
