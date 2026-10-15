@@ -1,36 +1,1 @@
-[18:39:04] helper started D=/home/runner/work/mods/mods repo=maksummatatov10-spec1231/mods br=arena/d729e4bb-mods token=yes
-[18:39:05] first log shipped
-[18:39:06] X ready (waited 1 half-seconds)
-Selecting previously unselected package libxdo3:amd64.
-(Reading database ... (Reading database ... 5%(Reading database ... 10%(Reading database ... 15%(Reading database ... 20%(Reading database ... 25%(Reading database ... 30%(Reading database ... 35%(Reading database ... 40%(Reading database ... 45%(Reading database ... 50%(Reading database ... 55%(Reading database ... 60%(Reading database ... 65%(Reading database ... 70%(Reading database ... 75%(Reading database ... 80%(Reading database ... 85%(Reading database ... 90%(Reading database ... 95%(Reading database ... 100%(Reading database ... 203540 files and directories currently installed.)
-Preparing to unpack .../libxdo3_1%3a3.20160805.1-5build1_amd64.deb ...
-Unpacking libxdo3:amd64 (1:3.20160805.1-5build1) ...
-Selecting previously unselected package xdotool.
-Preparing to unpack .../xdotool_1%3a3.20160805.1-5build1_amd64.deb ...
-Unpacking xdotool (1:3.20160805.1-5build1) ...
-Setting up libxdo3:amd64 (1:3.20160805.1-5build1) ...
-Setting up xdotool (1:3.20160805.1-5build1) ...
-Processing triggers for man-db (2.12.0-4build2) ...
-Not building database; man-db/auto-update is not 'true'.
-Processing triggers for libc-bin (2.39-0ubuntu8.9) ...
-
-Running kernel seems to be up-to-date.
-
-No services need to be restarted.
-
-No containers need to be restarted.
-
-No user sessions are running outdated binaries.
-
-No VM guests are running outdated hypervisor (qemu) binaries on this host.
-[18:39:25] server up, launching client
--Dstormfang.ciop=1
-[18:39:27] client gradle bg started
-[18:40:05] click loop done (connecting or joined)
-[18:40:23] right-click delivered (lightning should spawn)
-[18:40:24] photo 1 taken
-[18:40:31] photo 2 taken
-[18:40:40] photo 3 taken
-[18:40:45] shipped 2026-10-15_18.40.24.png
-[18:40:47] shipped 2026-10-15_18.40.31.png
-[18:40:49] shipped 2026-10-15_18.40.40.png
+[18:45:57] helper started D=/home/runner/work/mods/mods repo=maksummatatov10-spec1231/mods br=arena/d729e4bb-mods token=yes
