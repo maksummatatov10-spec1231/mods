@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# CI wrapper v31 — real gradle wrapper runs under gradlew_orig. Adds:
+# CI wrapper v34 — real gradle wrapper runs under gradlew_orig. Adds:
 #  * line-buffered tee (stdbuf) so `until grep` in later steps sees fresh lines;
 #  * a pkill shim injected via $GITHUB_ENV so the frozen "Stop game processes"
 #    step can't kill its own shell (pattern matched the step's argv) — without it
@@ -156,6 +156,7 @@ mkdir -p "$P/run-client"
 # exact same assets as a plain FILE resource pack in the run dir and auto-apply it:
 RPDIR="$P/run-client/resourcepacks"
 mkdir -p "$RPDIR"
+printf 'lang:en_us\nresourcePacks:[{"id":"File/stormfang","required":false}]\nincompatibleResourcePacks:[]\n' > "$P/run-client/options.txt"
 printf '{"pack":{"pack_format":46,"description":"Stormfang CI assets"}}' > "$P/src/main/resources/pack.mcmeta"
 ( cd "$P/src/main/resources" && zip -qr "$RPDIR/stormfang.zip" pack.mcmeta assets ) 2>>"$LOGF"
 say "asset zip staged: $(ls -l "$RPDIR" 2>/dev/null | tr -s ' ' | cut -d' ' -f5,9 | tr '\n' ';')"
