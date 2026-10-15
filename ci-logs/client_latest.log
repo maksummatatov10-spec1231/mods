@@ -1,5 +1,4 @@
-y not load properly!
-[19:57:19] [main/INFO] (FabricLoader/GameProvider) Loading Minecraft 1.21.4 with Fabric Loader 0.16.9
+.21.4 with Fabric Loader 0.16.9
 [19:57:20] [main/INFO] (FabricLoader) Loading 55 mods:
 	- fabric-api 0.119.4+1.21.4
 	- fabric-api-base 0.4.54+b47eab6b04
@@ -328,3 +327,4 @@ Native library (linux-x86-64/libflite.so) not found in resource path (/tmp/proj-
 [19:58:08] [Render thread/INFO] (Minecraft) [System] [CHAT] Saved screenshot as 2026-10-15_19.58.08.png
 [19:58:10] [Render thread/INFO] (stormfang) [Stormfang-DEV] harness finished
 [19:58:16] [Render thread/INFO] (Minecraft) [System] [CHAT] Saved screenshot as 2026-10-15_19.58.16.png
+[19:58:31] [Render thread/WARN] (Minecraft) Client disconnected with reason: Server closed
