@@ -25,3 +25,4 @@ No user sessions are running outdated binaries.
 No VM guests are running outdated hypervisor (qemu) binaries on this host.
 [18:52:48] server up, launching client
 -Dstormfang.ciop=1
+[18:52:50] client gradle bg started
