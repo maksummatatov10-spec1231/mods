@@ -1,26 +1,26 @@
-=== gradlew wrapper invoked: 2026-10-15T14:15:47Z
+=== gradlew wrapper invoked: 2026-10-15T14:17:54Z
 === args: build --no-daemon --stacktrace
 === dir: /home/runner/work/mods/mods
 total 88
-drwxr-xr-x 10 runner runner 4096 Oct 15 14:15 .
-drwxr-xr-x  3 runner runner 4096 Oct 15 14:15 ..
-drwxr-xr-x  7 runner runner 4096 Oct 15 14:15 .git
-drwxr-xr-x  3 runner runner 4096 Oct 15 14:15 .github
--rw-r--r--  1 runner runner  162 Oct 15 14:15 .gitignore
--rw-r--r--  1 runner runner 1070 Oct 15 14:15 LICENSE
--rw-r--r--  1 runner runner 3842 Oct 15 14:15 README.md
-drwxr-xr-x  2 runner runner 4096 Oct 15 14:15 assets
--rw-r--r--  1 runner runner 1712 Oct 15 14:15 build.gradle
-drwxr-xr-x  2 runner runner 4096 Oct 15 14:15 ci
-drwxr-xr-x  2 runner runner 4096 Oct 15 14:15 diag
--rw-r--r--  1 runner runner 1522 Oct 15 14:15 exfil_server.py
-drwxr-xr-x  3 runner runner 4096 Oct 15 14:15 gradle
--rw-r--r--  1 runner runner  399 Oct 15 14:15 gradle.properties
--rwxr-xr-x  1 runner runner 2564 Oct 15 14:15 gradlew
--rw-r--r--  1 runner runner 2872 Oct 15 14:15 gradlew.bat
--rwxr-xr-x  1 runner runner 8762 Oct 15 14:15 gradlew_orig
--rw-r--r--  1 runner runner  184 Oct 15 14:15 settings.gradle
-drwxr-xr-x  4 runner runner 4096 Oct 15 14:15 src
+drwxr-xr-x 10 runner runner 4096 Oct 15 14:17 .
+drwxr-xr-x  3 runner runner 4096 Oct 15 14:17 ..
+drwxr-xr-x  7 runner runner 4096 Oct 15 14:17 .git
+drwxr-xr-x  3 runner runner 4096 Oct 15 14:17 .github
+-rw-r--r--  1 runner runner  162 Oct 15 14:17 .gitignore
+-rw-r--r--  1 runner runner 1070 Oct 15 14:17 LICENSE
+-rw-r--r--  1 runner runner 3842 Oct 15 14:17 README.md
+drwxr-xr-x  2 runner runner 4096 Oct 15 14:17 assets
+-rw-r--r--  1 runner runner 1712 Oct 15 14:17 build.gradle
+drwxr-xr-x  2 runner runner 4096 Oct 15 14:17 ci
+drwxr-xr-x  2 runner runner 4096 Oct 15 14:17 diag
+-rw-r--r--  1 runner runner 1522 Oct 15 14:17 exfil_server.py
+drwxr-xr-x  3 runner runner 4096 Oct 15 14:17 gradle
+-rw-r--r--  1 runner runner  399 Oct 15 14:17 gradle.properties
+-rwxr-xr-x  1 runner runner 2564 Oct 15 14:17 gradlew
+-rw-r--r--  1 runner runner 2872 Oct 15 14:17 gradlew.bat
+-rwxr-xr-x  1 runner runner 8762 Oct 15 14:17 gradlew_orig
+-rw-r--r--  1 runner runner  184 Oct 15 14:17 settings.gradle
+drwxr-xr-x  4 runner runner 4096 Oct 15 14:17 src
 Downloading https://services.gradle.org/distributions/gradle-8.11.1-bin.zip
 .............10%.............20%.............30%.............40%.............50%.............60%.............70%.............80%.............90%.............100%
 
@@ -51,25 +51,26 @@ Please make sure to read and understand the following license:
 > Task :classes
 
 > Task :compileClientJava FAILED
+/home/runner/work/mods/mods/src/client/java/net/arena/stormfang/client/StormfangDevHarness.java:37: error: inventory is not public in Player; cannot be accessed from outside package
+						client.player.inventory.selectedSlot = 0;
+						             ^
 /home/runner/work/mods/mods/src/client/java/net/arena/stormfang/client/StormfangDevHarness.java:37: error: cannot find symbol
-						client.player.getInventory().selectedSlot = 0;
-						                            ^
+						client.player.inventory.selectedSlot = 0;
+						                       ^
   symbol:   variable selectedSlot
-  location: class Inventory
-/home/runner/work/mods/mods/src/client/java/net/arena/stormfang/client/StormfangDevHarness.java:45: error: method click in class KeyMapping cannot be applied to given types;
-						client.options.keyUse.click();
-						                     ^
-  required: Key
-  found:    no arguments
-  reason: actual and formal argument lists differ in length
-/home/runner/work/mods/mods/src/client/java/net/arena/stormfang/client/StormfangDevHarness.java:55: error: method click in class KeyMapping cannot be applied to given types;
-						client.options.keyInventory.click();
-						                           ^
-  required: Key
-  found:    no arguments
-  reason: actual and formal argument lists differ in length
-3 errors
-gradle/actions: Writing build results to /home/runner/work/_temp/.gradle-actions/build-results/__run_2-1792073761082.json
+  location: variable inventory of type Inventory
+/home/runner/work/mods/mods/src/client/java/net/arena/stormfang/client/StormfangDevHarness.java:45: error: cannot find symbol
+						client.options.keyUse.click(client.options.keyUse.getKey());
+						                                                 ^
+  symbol:   method getKey()
+  location: variable keyUse of type KeyMapping
+/home/runner/work/mods/mods/src/client/java/net/arena/stormfang/client/StormfangDevHarness.java:55: error: cannot find symbol
+						client.options.keyInventory.click(client.options.keyInventory.getKey());
+						                                                             ^
+  symbol:   method getKey()
+  location: variable keyInventory of type KeyMapping
+4 errors
+gradle/actions: Writing build results to /home/runner/work/_temp/.gradle-actions/build-results/__run_2-1792073887796.json
 [Incubating] Problems report is available at: file:///home/runner/work/mods/mods/build/reports/problems/problems-report.html
 
 FAILURE: Build failed with an exception.
@@ -77,24 +78,25 @@ FAILURE: Build failed with an exception.
 * What went wrong:
 Execution failed for task ':compileClientJava'.
 > Compilation failed; see the compiler output below.
-  /home/runner/work/mods/mods/src/client/java/net/arena/stormfang/client/StormfangDevHarness.java:45: error: method click in class KeyMapping cannot be applied to given types;
-  						client.options.keyUse.click();
-  						                     ^
-    required: Key
-    found:    no arguments
-    reason: actual and formal argument lists differ in length
-  /home/runner/work/mods/mods/src/client/java/net/arena/stormfang/client/StormfangDevHarness.java:55: error: method click in class KeyMapping cannot be applied to given types;
-  						client.options.keyInventory.click();
-  						                           ^
-    required: Key
-    found:    no arguments
-    reason: actual and formal argument lists differ in length
+  /home/runner/work/mods/mods/src/client/java/net/arena/stormfang/client/StormfangDevHarness.java:37: error: inventory is not public in Player; cannot be accessed from outside package
+  						client.player.inventory.selectedSlot = 0;
+  						             ^
+  /home/runner/work/mods/mods/src/client/java/net/arena/stormfang/client/StormfangDevHarness.java:45: error: cannot find symbol
+  						client.options.keyUse.click(client.options.keyUse.getKey());
+  						                                                 ^
+    symbol:   method getKey()
+    location: variable keyUse of type KeyMapping
+  /home/runner/work/mods/mods/src/client/java/net/arena/stormfang/client/StormfangDevHarness.java:55: error: cannot find symbol
+  						client.options.keyInventory.click(client.options.keyInventory.getKey());
+  						                                                             ^
+    symbol:   method getKey()
+    location: variable keyInventory of type KeyMapping
   /home/runner/work/mods/mods/src/client/java/net/arena/stormfang/client/StormfangDevHarness.java:37: error: cannot find symbol
-  						client.player.getInventory().selectedSlot = 0;
-  						                            ^
+  						client.player.inventory.selectedSlot = 0;
+  						                       ^
     symbol:   variable selectedSlot
-    location: class Inventory
-  3 errors
+    location: variable inventory of type Inventory
+  4 errors
 
 * Try:
 > Check your code and dependencies to fix the compilation error(s)
@@ -134,24 +136,25 @@ org.gradle.api.tasks.TaskExecutionException: Execution failed for task ':compile
 	at org.gradle.internal.concurrent.ExecutorPolicy$CatchAndRecordFailures.onExecute(ExecutorPolicy.java:64)
 	at org.gradle.internal.concurrent.AbstractManagedExecutor$1.run(AbstractManagedExecutor.java:48)
 Caused by: org.gradle.api.internal.tasks.compile.CompilationFailedException: Compilation failed; see the compiler output below.
-/home/runner/work/mods/mods/src/client/java/net/arena/stormfang/client/StormfangDevHarness.java:45: error: method click in class KeyMapping cannot be applied to given types;
-						client.options.keyUse.click();
-						                     ^
-  required: Key
-  found:    no arguments
-  reason: actual and formal argument lists differ in length
-/home/runner/work/mods/mods/src/client/java/net/arena/stormfang/client/StormfangDevHarness.java:55: error: method click in class KeyMapping cannot be applied to given types;
-						client.options.keyInventory.click();
-						                           ^
-  required: Key
-  found:    no arguments
-  reason: actual and formal argument lists differ in length
+/home/runner/work/mods/mods/src/client/java/net/arena/stormfang/client/StormfangDevHarness.java:37: error: inventory is not public in Player; cannot be accessed from outside package
+						client.player.inventory.selectedSlot = 0;
+						             ^
+/home/runner/work/mods/mods/src/client/java/net/arena/stormfang/client/StormfangDevHarness.java:45: error: cannot find symbol
+						client.options.keyUse.click(client.options.keyUse.getKey());
+						                                                 ^
+  symbol:   method getKey()
+  location: variable keyUse of type KeyMapping
+/home/runner/work/mods/mods/src/client/java/net/arena/stormfang/client/StormfangDevHarness.java:55: error: cannot find symbol
+						client.options.keyInventory.click(client.options.keyInventory.getKey());
+						                                                             ^
+  symbol:   method getKey()
+  location: variable keyInventory of type KeyMapping
 /home/runner/work/mods/mods/src/client/java/net/arena/stormfang/client/StormfangDevHarness.java:37: error: cannot find symbol
-						client.player.getInventory().selectedSlot = 0;
-						                            ^
+						client.player.inventory.selectedSlot = 0;
+						                       ^
   symbol:   variable selectedSlot
-  location: class Inventory
-3 errors
+  location: variable inventory of type Inventory
+4 errors
 	at org.gradle.api.internal.tasks.compile.JdkJavaCompiler.execute(JdkJavaCompiler.java:84)
 	at org.gradle.api.internal.tasks.compile.JdkJavaCompiler.execute(JdkJavaCompiler.java:46)
 	at org.gradle.api.internal.tasks.compile.NormalizingJavaCompiler.delegateAndHandleErrors(NormalizingJavaCompiler.java:98)
@@ -303,6 +306,6 @@ Caused by: org.gradle.api.internal.tasks.compile.CompilationFailedException: Com
 	at org.gradle.internal.concurrent.AbstractManagedExecutor$1.run(AbstractManagedExecutor.java:48)
 
 
-BUILD FAILED in 1m 8s
+BUILD FAILED in 1m 1s
 3 actionable tasks: 3 executed
 === exit code: 1
