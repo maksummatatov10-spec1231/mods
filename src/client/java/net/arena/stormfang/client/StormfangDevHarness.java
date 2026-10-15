@@ -36,40 +36,21 @@ public class StormfangDevHarness implements ClientModInitializer {
 				// first-run "accessibility" / title screens block quickPlay until dismissed:
 				// close any such screen ourselves so the client proceeds into the world.
 				menuTick++;
-				if (onboardingHandled && !connectAttempted && menuTick >= connectTick) {
+				if (onboardingHandled && !connectAttempted && menuTick >= connectTick && client.level == null) {
 					connectAttempted = true;
-					// mapping-agnostic: find the "launchMultiplayer/startMultiplayerPlay"-style
-					// method on Minecraft(String host, int port) and invoke it.
-					boolean ok = false;
-					StringBuilder cands = new StringBuilder();
-					for (java.lang.reflect.Method m : client.getClass().getDeclaredMethods()) {
-						String mn = m.getName().toLowerCase();
-						if (!(mn.contains("multiplayer") || mn.contains("connect"))) continue;
-						Class<?>[] p = m.getParameterTypes();
-						cands.append(m.getName()).append('(');
-						for (Class<?> c : p) cands.append(c.getSimpleName()).append(',');
-						cands.append(") ");
-						if (p.length == 2 && p[0] == String.class
-								&& (p[1] == int.class || p[1] == Integer.class)) {
-							try {
-								m.setAccessible(true);
-								m.invoke(client, "localhost", 25565);
-								StormfangMod.LOGGER.info("[Stormfang-DEV] connected via {}()", m.getName());
-								ok = true;
-								break;
-							} catch (Throwable e) {
-								StormfangMod.LOGGER.warn("[Stormfang-DEV] {} failed: {}", m.getName(), e.toString());
-							}
-						}
-					}
-					if (!ok) {
-						StormfangMod.LOGGER.warn("[Stormfang-DEV] no launcher among: {}", cands);
+					// TitleScreen#init triggers vanilla's pending quickPlay task — that is
+					// exactly the --quickPlayMultiplayer we pass via the run config.
+					try {
+						client.setScreen(new net.minecraft.client.gui.screens.TitleScreen());
+						StormfangMod.LOGGER.info("[Stormfang-DEV] opened TitleScreen to run quickPlay");
+					} catch (Throwable e) {
+						StormfangMod.LOGGER.warn("[Stormfang-DEV] title open failed: {}", e.toString());
 					}
 				}
 				if (!onboardingHandled && menuTick > 30 && client.screen != null) {
 					String cn = client.screen.getClass().getSimpleName();
 					if (cn.contains("Accessibility")) {
-						client.setScreen(null);
+						client.setScreen(new net.minecraft.client.gui.screens.TitleScreen());
 						onboardingHandled = true;
 						connectTick = menuTick + 20;
 						StormfangMod.LOGGER.info("[Stormfang-DEV] dismissed first-run screen {}", cn);
