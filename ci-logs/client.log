@@ -334,3 +334,10 @@ Native library (linux-x86-64/libflite.so) not found in resource path (/tmp/proj-
 [16:03:15] [Render thread/INFO] (Minecraft) [System] [CHAT] give @s stormfang:stormfang<--[HERE]
 [16:03:18] [Render thread/INFO] (stormfang) [Stormfang-DEV] SHOT_REQUESTED 1
 [16:03:20] [Render thread/INFO] (Minecraft) [System] [CHAT] Saved screenshot as 2026-10-15_16.03.20.png
+[16:03:21] [Render thread/INFO] (stormfang) [Stormfang-DEV] thunderclap triggered
+[16:03:22] [Render thread/INFO] (stormfang) [Stormfang-DEV] SHOT_REQUESTED 2
+[16:03:24] [Render thread/INFO] (stormfang) [Stormfang-DEV] inventory open, SHOT_REQUESTED 3
+[16:03:25] [Render thread/INFO] (Minecraft) [System] [CHAT] Saved screenshot as 2026-10-15_16.03.25.png
+[16:03:26] [Render thread/INFO] (stormfang) [Stormfang-DEV] harness finished
+[16:03:30] [Render thread/INFO] (Minecraft) [System] [CHAT] Saved screenshot as 2026-10-15_16.03.30.png
+[16:03:46] [Render thread/WARN] (Minecraft) Client disconnected with reason: Disconnected
