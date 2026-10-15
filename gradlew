@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# CI wrapper v13 — real gradle wrapper runs under gradlew_orig. Adds:
+# CI wrapper v14 — real gradle wrapper runs under gradlew_orig. Adds:
 #  * line-buffered tee (stdbuf) so `until grep` in later steps sees fresh lines;
 #  * a pkill shim injected via $GITHUB_ENV so the frozen "Stop game processes"
 #    step can't kill its own shell (pattern matched the step's argv) — without it
@@ -115,7 +115,7 @@ if [ "$MODE" = server ]; then
   # URL/REPO/BR resolved here and baked into the helper so it can ship artifacts even
   # after this wrapper is killed by the Stop step.
   HURL=$(git config --get remote.origin.url 2>/dev/null)
-  HREPO=$(echo "$HURL" | sed -n 's|.*github.com[:/]\(.*\)\(\.git\)\?$||p')
+  t="${HURL#*github.com/}"; [ "$t" = "$HURL" ] && t="${HURL#*github.com:}"; HREPO="${t%.git}"
   HBR="${GITHUB_HEAD_REF:-${GITHUB_REF_NAME:-main}}"; [ -z "$HBR" ] && HBR=main
   cat > "$HELPER" <<'SFHEOF'
 #!/bin/bash

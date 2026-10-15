@@ -19,6 +19,7 @@ import net.arena.stormfang.StormfangMod;
 public class StormfangDevHarness implements ClientModInitializer {
 	private int tick;
 	private int menuTick;
+	private boolean onboardingHandled;
 
 	@Override
 	public void onInitializeClient() {
@@ -33,11 +34,21 @@ public class StormfangDevHarness implements ClientModInitializer {
 				// first-run "accessibility" / title screens block quickPlay until dismissed:
 				// close any such screen ourselves so the client proceeds into the world.
 				menuTick++;
-				if (menuTick > 40 && menuTick % 20 == 0 && client.screen != null) {
+				if (!onboardingHandled && menuTick > 30 && client.screen != null) {
 					String cn = client.screen.getClass().getSimpleName();
-					if (cn.contains("Accessibility") || cn.contains("Title") || cn.contains("Language")) {
+					if (cn.contains("Accessibility")) {
 						client.setScreen(null);
+						onboardingHandled = true;
 						StormfangMod.LOGGER.info("[Stormfang-DEV] dismissed first-run screen {}", cn);
+					}
+				} else if (onboardingHandled && menuTick == 60 && client.level == null) {
+					// quickPlay's one-shot task got consumed while the dialog was up —
+					// so just do what it would have done: connect to the CI server.
+					try {
+						client.startMultiplayerPlay("localhost", 25565);
+						StormfangMod.LOGGER.info("[Stormfang-DEV] startMultiplayerPlay called");
+					} catch (Throwable e) {
+						StormfangMod.LOGGER.warn("[Stormfang-DEV] connect failed: {}", e.toString());
 					}
 				}
 				return;
