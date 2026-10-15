@@ -1,7 +1,4 @@
-f1078458433116e9ed42c1cc98096/sponge-mixin-0.15.4+mixin.0.8.7.jar Service=Knot/Fabric Env=CLIENT
-[20:16:35] [main/INFO] (FabricLoader/Mixin) Loaded Fabric development mappings for mixin remapper!
-[20:16:35] [main/INFO] (FabricLoader/Mixin) Compatibility level set to JAVA_21
-[20:16:37] [main/INFO] (FabricLoader/MixinExtras|Service) Initializing MixinExtras via com.llamalad7.mixinextras.service.MixinExtrasServiceImpl(version=0.4.1).
+xinextras.service.MixinExtrasServiceImpl(version=0.4.1).
 [20:16:38] [Datafixer Bootstrap/INFO] (Minecraft) 243 Datafixer optimizations took 566 milliseconds
 [20:16:44] [Render thread/INFO] (Minecraft) Environment: Environment[sessionHost=https://sessionserver.mojang.com, servicesHost=https://api.minecraftservices.com, name=PROD]
 [20:16:44] [Render thread/INFO] (Minecraft) Setting user: Player661
@@ -290,3 +287,7 @@ Native library (linux-x86-64/libflite.so) not found in resource path (/tmp/proj-
 [20:17:17] [Render thread/INFO] (stormfang) [Stormfang-DEV] thunderclap triggered
 [20:17:18] [Render thread/INFO] (stormfang) [Stormfang-DEV] SHOT_REQUESTED 2
 [20:17:20] [Render thread/INFO] (Minecraft) [System] [CHAT] Saved screenshot as 2026-10-15_20.17.20.png
+[20:17:21] [Render thread/INFO] (stormfang) [Stormfang-DEV] inventory open, SHOT_REQUESTED 3
+[20:17:26] [Render thread/INFO] (Minecraft) [System] [CHAT] Saved screenshot as 2026-10-15_20.17.26.png
+[20:17:28] [Render thread/INFO] (stormfang) [Stormfang-DEV] harness finished
+[20:17:33] [Render thread/INFO] (Minecraft) [System] [CHAT] Saved screenshot as 2026-10-15_20.17.33.png
