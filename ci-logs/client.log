@@ -249,3 +249,4 @@ java.lang.IllegalStateException: Failed to open OpenAL device
 [19:36:16] [Render thread/INFO] (Minecraft) [System] [CHAT] Saved screenshot as 2026-10-15_19.36.16.png
 [19:36:17] [Render thread/INFO] (stormfang) [Stormfang-DEV] harness finished
 [19:36:24] [Render thread/INFO] (Minecraft) [System] [CHAT] Saved screenshot as 2026-10-15_19.36.24.png
+[19:36:44] [Render thread/WARN] (Minecraft) Client disconnected with reason: Disconnected
