@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# CI wrapper v19 — real gradle wrapper runs under gradlew_orig. Adds:
+# CI wrapper v20 — real gradle wrapper runs under gradlew_orig. Adds:
 #  * line-buffered tee (stdbuf) so `until grep` in later steps sees fresh lines;
 #  * a pkill shim injected via $GITHUB_ENV so the frozen "Stop game processes"
 #    step can't kill its own shell (pattern matched the step's argv) — without it
@@ -143,9 +143,12 @@ hship(){ # src dst
   curl -sf -X PUT -H "Authorization: Bearer $CI_TOKEN" -H "Accept: application/vnd.github+json" --data @"$payload" "https://api.github.com/repos/$HREPO/contents/$dst" >/dev/null 2>>"$LOGF"
 }
 say "helper started D=$D repo=$HREPO br=$HBR token=${CI_TOKEN:+yes}"
+# has STR — look in BOTH the real-time log4j file (immediateFlush) and the buffered stdout copy
+has(){ cat "$LATEST" "$D/client.log" 2>/dev/null | grep -q "$1" 2>/dev/null; }
 hship "$LOGF" "diag/sf_helper.log" && say "first log shipped" || say "first log ship FAILED"
 # start project copy FIRST (loom config/remap overlaps with server boot)
 P=/tmp/proj-c
+LATEST="$P/run-client/logs/latest.log"
 rm -rf "$P"; cp -a "$D" "$P" >>"$LOGF" 2>&1
 mkdir -p "$P/run-client"
 if ! pgrep -x Xvfb >/dev/null 2>&1; then ( Xvfb :99 -ac -screen 0 1600x900x24 >/dev/null 2>&1 & ); fi
@@ -161,6 +164,7 @@ hship "$LOGF" "diag/sf_helper.log"
       [ -f "$f" ] && hship "$f" "screenshots/$(basename "$f")"
     done
     [ -f "$D/client.log" ] && tail -c 100000 "$D/client.log" > /tmp/client.tail && hship /tmp/client.tail "ci-logs/client.log"
+    [ -f "$LATEST" ] && tail -c 150000 "$LATEST" > /tmp/lat.tail && hship /tmp/lat.tail "ci-logs/client_latest.log"
     hship "$LOGF" "diag/sf_helper.log"
   done ) >/dev/null 2>&1 &
 until grep -q "Done (" "$D/server_smoke.log" 2>/dev/null; do sleep 3; done
@@ -169,40 +173,42 @@ ps -ef 2>/dev/null | grep -m1 "Knot" | grep -oE "\-Dstormfang[.A-Za-z0-9=]*" >> 
 sleep 2
 ( cd "$P" && bash gradlew_orig runClient --no-daemon -Pdevtest >> "$D/client.log" 2>&1 ) &
 say "client gradle bg started"
-# click "Continue" on the first-run accessibility screen (center button, ~854x480 GUI
-# scaled to the 1600x900 window => (798, 810)); plain Return as fallback; stop as soon
-# as the client actually joins the world.
-( while ! grep -q "joined world, giving" "$D/client.log" 2>/dev/null; do
+# click "Continue" on the first-run accessibility screen (window is 854x480 — the
+# screenshot size; button center ~426,432), Tab-cycle as fallback. CRITICAL: stop the
+# moment the game starts connecting, otherwise a stray click hits Cancel on the
+# ConnectScreen (that killed v19).
+( while ! has "joined world, giving" && ! has "Connecting to localhost"; do
     W=$(xdotool search --name "Minecraft" 2>/dev/null | tail -1)
     [ -z "$W" ] && { sleep 2; continue; }
-    xdotool windowactivate --sync "$W" 2>/dev/null || true
+    xdotool windowactivate "$W" 2>/dev/null || true
     xdotool mousemove --window "$W" 426 432 click 1 2>/dev/null || true
     sleep 1
     xdotool key --window "$W" Tab Tab Tab Tab Return 2>/dev/null || true
     sleep 2
   done
-  say "world joined, click loop done"
+  say "click loop done (connecting or joined)"
   # the cast: KeyMapping.click() is a no-op for inputs in 1.21.2+, so press the REAL
   # right mouse button when the harness logs "thunderclap triggered"
-  until grep -q "thunderclap triggered" "$D/client.log" 2>/dev/null; do sleep 1; done
-  W=$(xdotool search --name "Minecraft" 2>/dev/null | tail -1)
-  if [ -n "$W" ]; then
-    xdotool windowactivate --sync "$W" 2>/dev/null || true
-    xdotool mousedown 3 2>/dev/null; sleep 0.25; xdotool mouseup 3 2>/dev/null
-    say "right-click delivered (lightning should spawn)"
+  for i2 in $(seq 1 240); do has "thunderclap triggered" && break; sleep 1; done
+  if has "thunderclap triggered"; then
+    W=$(xdotool search --name "Minecraft" 2>/dev/null | tail -1)
+    if [ -n "$W" ]; then
+      xdotool mousemove --window "$W" 427 240 2>/dev/null || true
+      sleep 0.3
+      xdotool mousedown 3 2>/dev/null; sleep 0.25; xdotool mouseup 3 2>/dev/null
+      say "right-click delivered (lightning should spawn)"
+    fi
   fi ) >/dev/null 2>&1 &
-for ph in 1 2 3; do :; done
 while :; do
   sleep 3
-  [ -f "$D/client.log" ] || continue
   for ph in 1 2 3; do
     F=/tmp/.shot$ph.done
-    grep -q "SHOT_REQUESTED $ph" "$D/client.log" 2>/dev/null || continue
+    has "SHOT_REQUESTED $ph" || continue
     [ -f "$F" ] && continue
     : > "$F"
     sleep 2
     W=$(xdotool search --name "Minecraft" 2>/dev/null | tail -1)
-    if [ -n "$W" ]; then xdotool windowactivate --sync "$W" key F2 2>/dev/null || xdotool key F2 2>/dev/null; else xdotool key F2 2>/dev/null; fi
+    if [ -n "$W" ]; then xdotool windowactivate "$W" key F2 2>/dev/null || xdotool key F2 2>/dev/null; else xdotool key F2 2>/dev/null; fi
     say "photo $ph taken"
     sleep 3
     mkdir -p "$D/run-client/screenshots"
