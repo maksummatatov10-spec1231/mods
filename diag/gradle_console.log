@@ -25,3 +25,26 @@ Please make sure to read and understand the following license:
 :remapping 50 mods from modImplementation (java-api)
 
 > Task :compileJava
+> Task :processResources
+> Task :classes
+> Task :compileClientJava
+> Task :processClientResources NO-SOURCE
+> Task :jar
+> Task :clientClasses
+> Task :compileTestJava NO-SOURCE
+> Task :processIncludeJars
+> Task :sourcesJar
+> Task :processTestResources NO-SOURCE
+> Task :testClasses UP-TO-DATE
+> Task :test NO-SOURCE
+> Task :validateAccessWidener NO-SOURCE
+> Task :check UP-TO-DATE
+> Task :remapJar
+> Task :remapSourcesJar
+> Task :assemble
+> Task :build
+gradle/actions: Writing build results to /home/runner/work/_temp/.gradle-actions/build-results/__run_2-1792095182974.json
+
+BUILD SUCCESSFUL in 2m 42s
+8 actionable tasks: 8 executed
+=== exit code: 0 2026-10-15T20:15:35Z
