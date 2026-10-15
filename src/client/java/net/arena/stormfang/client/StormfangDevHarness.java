@@ -44,11 +44,26 @@ public class StormfangDevHarness implements ClientModInitializer {
 				} else if (onboardingHandled && menuTick == 60 && client.level == null) {
 					// quickPlay's one-shot task got consumed while the dialog was up —
 					// so just do what it would have done: connect to the CI server.
-					try {
-						client.startMultiplayerPlay("localhost", 25565);
-						StormfangMod.LOGGER.info("[Stormfang-DEV] startMultiplayerPlay called");
-					} catch (Throwable e) {
-						StormfangMod.LOGGER.warn("[Stormfang-DEV] connect failed: {}", e.toString());
+					// mapping-agnostic: find the "launchMultiplayer/startMultiplayerPlay"-style
+					// method on Minecraft(String host, int port) and invoke it.
+					boolean ok = false;
+					for (java.lang.reflect.Method m : client.getClass().getMethods()) {
+						Class<?>[] p = m.getParameterTypes();
+						if (p.length == 2 && p[0] == String.class
+								&& (p[1] == int.class || p[1] == Integer.class)
+								&& m.getName().toLowerCase().contains("multiplayer")) {
+							try {
+								m.invoke(client, "localhost", 25565);
+								StormfangMod.LOGGER.info("[Stormfang-DEV] connected via {}()", m.getName());
+								ok = true;
+								break;
+							} catch (Throwable e) {
+								StormfangMod.LOGGER.warn("[Stormfang-DEV] {} failed: {}", m.getName(), e.toString());
+							}
+						}
+					}
+					if (!ok) {
+						StormfangMod.LOGGER.warn("[Stormfang-DEV] no multiplayer launcher found");
 					}
 				}
 				return;
