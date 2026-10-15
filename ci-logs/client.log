@@ -363,3 +363,5 @@ Native library (linux-x86-64/libflite.so) not found in resource path (/tmp/proj-
 [18:40:26] [Render thread/INFO] (stormfang) [Stormfang-DEV] inventory open, SHOT_REQUESTED 3
 [18:40:30] [Render thread/INFO] (stormfang) [Stormfang-DEV] harness finished
 [18:40:31] [Render thread/INFO] (Minecraft) [System] [CHAT] Saved screenshot as 2026-10-15_18.40.31.png
+[18:40:40] [Render thread/INFO] (Minecraft) [System] [CHAT] Saved screenshot as 2026-10-15_18.40.40.png
+[18:41:00] [Render thread/WARN] (Minecraft) Client disconnected with reason: Server closed
