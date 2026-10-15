@@ -13,7 +13,7 @@ import net.minecraft.world.phys.Vec3;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
-import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 /**
  * Every hit with Stormfang crackles with electricity; 35% chance to summon a bolt
@@ -23,7 +23,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 public class LivingEntityHurtMixin {
 	// 1.21.2+: LivingEntity#hurt(DamageSource,float) was split into hurtServer(ServerLevel,...)
 	@Inject(method = "hurtServer(Lnet/minecraft/server/level/ServerLevel;Lnet/minecraft/world/damagesource/DamageSource;F)Z", at = @At("HEAD"))
-	private void stormfang$stormOnHit(ServerLevel serverLevel, DamageSource source, float amount, CallbackInfo ci) {
+	private void stormfang$stormOnHit(ServerLevel serverLevel, DamageSource source, float amount, CallbackInfoReturnable<Boolean> cir) {
 		LivingEntity self = (LivingEntity) (Object) this;
 		Level level = self.level();
 		if (!(source.getEntity() instanceof Player attacker)) {

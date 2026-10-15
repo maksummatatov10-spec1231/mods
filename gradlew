@@ -52,7 +52,6 @@ if [ "$MODE" != build ] && [ -n "$CI_TOKEN" ]; then
   # background shipper for game logs (survives pkill of java; keeps repo copy fresh)
   ( while true; do
       sleep 25
-      [ -f "$MODE" ] && ship "$MODE" "diag/$MODE"
       ship "$LOG" "diag/gradle_console.log" || true
     done ) > /dev/null 2>&1 &
   echo $! > "${TMPDIR:-/tmp}/shipper.pid"
