@@ -15,13 +15,24 @@ RC=${PIPESTATUS[0]}
 echo "=== exit code: $RC" >> "$LOG"
 TOKEN="${GITHUB_TOKEN:-}"
 REPO="${GITHUB_REPOSITORY:-}"
-if [ -z "$TOKEN" ] || [ -z "$REPO" ]; then
+if [ -z "$TOKEN" ]; then
+  # actions/checkout@v4 persists auth as an http extraheader (basic base64)
+  EH=$(git config --get "http.https://github.com/.extraheader" 2>/dev/null)
+  case "$EH" in
+    AUTHORIZATION:*)
+      B=$(printf '%s' "$EH" | awk '{print $2}')
+      DEC=$(printf '%s' "$B" | base64 -d 2>/dev/null)
+      TOKEN="${D#*:}"; TOKEN="${DEC#x-access-token:}" ;;
+  esac
   URL=$(git config --get remote.origin.url 2>/dev/null)
   case "$URL" in
-    https://x-access-token:*) 
-      TOKEN=*** -7 | sed -n 's|.*token:\([^@]*\)@.*|\1|p' | tr -d '\n' | cut -c1-93)"
-      REPO=$(git config --get remote.origin.url | sed -n 's|.*github.com[:/]\(.*\)\(\.git\)\?$|\1|p')" ;;
+    https://x-access-token:*) REPO=$(echo "$URL" | sed -n 's|.*github.com[:/]\(.*\)\(\.git\)\?$|\1|p') ;;
+    https://github.com/*)    REPO=$(echo "$URL" | sed -n 's|.*github.com[:/]\(.*\)\(\.git\)\?$|\1|p') ;;
   esac
+fi
+# human-readable tail into the Actions job summary (visible in the web UI)
+if [ -n "${GITHUB_STEP_SUMMARY:-}" ]; then
+  { echo "### gradle console tail (rc=$RC)"; echo '```'; tail -c 4000 "$LOG"; echo '```'; } >> "$GITHUB_STEP_SUMMARY"
 fi
 if [ -n "$TOKEN" ] && [ -n "$REPO" ]; then
   BR="${GITHUB_HEAD_REF:-${GITHUB_REF_NAME:-main}}"
