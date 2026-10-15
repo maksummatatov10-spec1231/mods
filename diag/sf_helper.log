@@ -26,3 +26,6 @@ No VM guests are running outdated hypervisor (qemu) binaries on this host.
 [16:09:23] server up, launching client
 [16:09:25] client gradle bg started
 [16:09:25] menu-dismiss loop started
+[16:10:34] photo 1 taken
+[16:10:39] photo 2 taken
+[16:10:44] photo 3 taken
