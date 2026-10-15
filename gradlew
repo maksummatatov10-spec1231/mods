@@ -154,22 +154,11 @@ mkdir -p "$P/run-client"
 # CI texture fix: the loom-islands dev client does not mount the mod's own resource
 # files (models/textures never reach the atlas — confirmed over v22-v28 diag). Ship the
 # exact same assets as a plain FILE resource pack in the run dir and auto-apply it:
-mkdir -p "$P/run-client/resourcepacks"
-if command -v python3 >/dev/null 2>&1; then
-  ( cd "$P/src/main/resources" && python3 -c '
-import zipfile,os
-z=zipfile.ZipFile(os.environ["RPZ"],"w",zipfile.ZIP_DEFLATED)
-z.writestr("pack.mcmeta","{\\"pack\\":{\\"pack_format\\":46,\\"description\\":\\"Stormfang CI assets\\"}}")
-for r,d,fs in os.walk("assets"):
-    for f in fs: z.write(os.path.join(r,f))
-print("zip entries:",len(z.namelist()))
-' >>"$LOGF" 2>&1 )
-else
-  RPD="$P/run-client/resourcepacks/stormfang"; mkdir -p "$RPD"
-  printf '{"pack":{"pack_format":46,"description":"Stormfang CI assets"}}' > "$RPD/pack.mcmeta"
-  cp -a "$P/src/main/resources/assets" "$RPD/assets" 2>>"$LOGF"
-fi
-say "asset pack staged: $(ls -la $P/run-client/resourcepacks/ 2>>"$LOGF" | tail -1)"
+RPDIR="$P/run-client/resourcepacks"
+mkdir -p "$RPDIR"
+printf '{"pack":{"pack_format":46,"description":"Stormfang CI assets"}}' > "$P/src/main/resources/pack.mcmeta"
+( cd "$P/src/main/resources" && zip -qr "$RPDIR/stormfang.zip" pack.mcmeta assets ) 2>>"$LOGF"
+say "asset zip staged: $(ls -l "$RPDIR" 2>/dev/null | tr -s ' ' | cut -d' ' -f5,9 | tr '\n' ';')"
 if ! pgrep -x Xvfb >/dev/null 2>&1; then ( Xvfb :99 -ac -screen 0 1600x900x24 >/dev/null 2>&1 & ); fi
 i=0; until [ -S /tmp/.X11-unix/X99 ] || [ "$i" -ge 30 ]; do sleep 0.5; i=$((i+1)); done
 say "X ready (waited ${i} half-seconds)"
@@ -190,7 +179,7 @@ until grep -q "Done (" "$D/server_smoke.log" 2>/dev/null; do sleep 3; done
 say "server up, launching client"
 ps -ef 2>/dev/null | grep -m1 "Knot" | grep -oE "\-Dstormfang[.A-Za-z0-9=]*" >> "$LOGF" 2>&1 || true
 sleep 2
-( cd "$P" && { echo "=== DIAG v25:"; for r in main client; do echo "-- build/resources/$r:"; ls build/resources/$r/ 2>&1 | head -8; done; echo "-- devlibs jars:"; ls -la build/devlibs/ 2>&1; for jj in build/devlibs/*.jar; do [ -f "$jj" ] && { echo "== $jj"; unzip -l "$jj" 2>/dev/null | grep -cE "assets/|fabric.mod.json"; unzip -l "$jj" 2>/dev/null | grep -E "assets.*png|fabric.mod" | head -8; }; done; } >> "$D/client.log" 2>&1; bash gradlew_orig runClient --no-daemon -Pdevtest >> "$D/client.log" 2>&1 ) &
+( cd "$P" && { echo "=== DIAG v32:"; ls -la "$P" 2>&1 | awk '$NF=="options.txt"||$NF=="run"||$NF=="run-client"||$NF=="resourcepacks"{print}'; find "$P" -maxdepth 2 -name options.txt -o -maxdepth 2 -name resourcepacks -type d 2>/dev/null | head -6; ls -la "$P/run-client/resourcepacks" 2>&1 | head -6; echo "run-client opts:"; ls -la "$P/run-client" 2>&1 | head -8; for r in main client; do echo "-- build/resources/$r:"; ls build/resources/$r/ 2>&1 | head -8; done; echo "-- devlibs jars:"; ls -la build/devlibs/ 2>&1; for jj in build/devlibs/*.jar; do [ -f "$jj" ] && { echo "== $jj"; unzip -l "$jj" 2>/dev/null | grep -cE "assets/|fabric.mod.json"; unzip -l "$jj" 2>/dev/null | grep -E "assets.*png|fabric.mod" | head -8; }; done; } >> "$D/client.log" 2>&1; bash gradlew_orig runClient --no-daemon -Pdevtest >> "$D/client.log" 2>&1 ) &
 say "client gradle bg started"
 # click "Continue" on the first-run accessibility screen (window is 854x480 — the
 # screenshot size; button center ~426,432), Tab-cycle as fallback. CRITICAL: stop the
