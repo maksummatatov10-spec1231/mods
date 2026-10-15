@@ -83,3 +83,15 @@ Fabric Loom: 1.9.2
 [19:51:56] [Server thread/WARN] (Minecraft) While this makes the game possible to play without internet access, it also opens up the ability for hackers to connect with any username they choose.
 [19:51:56] [Server thread/WARN] (Minecraft) To change this, set "online-mode" to "true" in the server.properties file.
 [19:51:56] [Server thread/INFO] (Minecraft) Preparing level "world"
+[19:51:56] [Server thread/INFO] (Minecraft) Preparing start region for dimension minecraft:overworld
+[19:51:56] [Worker-Main-3/INFO] (Minecraft) Preparing spawn area: 2%
+[19:51:57] [Server thread/INFO] (Minecraft) Time elapsed: 264 ms
+[19:51:57] [Server thread/INFO] (Minecraft) Done (1.021s)! For help, type "help"
+[19:52:10] [Server thread/INFO] (Minecraft) com.mojang.authlib.GameProfile@13562396[id=fb6d0a65-8b71-366b-9468-a909ea49780d,name=StormBot,properties={}] lost connection: This server requires Fabric Loader and Fabric API installed on your client!
+The following registry entry namespaces may be related:
+
+stormfang
+
+
+Contact the server's administrator for more information!
+[19:52:10] [Server thread/WARN] (Minecraft) handleDisconnection() called twice
