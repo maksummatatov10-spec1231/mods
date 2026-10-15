@@ -19,6 +19,19 @@ loom {
 			sourceSet sourceSets.client
 		}
 	}
+
+	// CI dev-test mode: isolated client run dir + quickPlay straight into the local server.
+	// Enable with: ./gradlew runClient -Pdevtest  (system property read by StormfangDevHarness)
+	runs {
+		client {
+			runDirectory = file("run-client")
+
+			if (project.hasProperty('devtest')) {
+				systemProperty "stormfang.devtest", "1"
+				programArgs "--quickPlayMultiplayer", "localhost:25565"
+			}
+		}
+	}
 }
 
 dependencies {

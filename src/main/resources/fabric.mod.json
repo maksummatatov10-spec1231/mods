@@ -19,7 +19,8 @@
 			"net.arena.stormfang.StormfangMod"
 		],
 		"client": [
-			"net.arena.stormfang.client.StormfangClient"
+			"net.arena.stormfang.client.StormfangClient",
+			"net.arena.stormfang.client.StormfangDevHarness"
 		]
 	},
 	"mixins": [
