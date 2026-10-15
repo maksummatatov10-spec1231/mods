@@ -243,3 +243,9 @@ java.lang.IllegalStateException: Failed to open OpenAL device
 [19:35:51] [Render thread/INFO] (Minecraft) [System] [CHAT] Gave 1 [Stormfang] to Player666
 [19:36:04] [Render thread/INFO] (stormfang) [Stormfang-DEV] SHOT_REQUESTED 1
 [19:36:07] [Render thread/INFO] (stormfang) [Stormfang-DEV] thunderclap triggered
+[19:36:08] [Render thread/INFO] (stormfang) [Stormfang-DEV] SHOT_REQUESTED 2
+[19:36:09] [Render thread/INFO] (Minecraft) [System] [CHAT] Saved screenshot as 2026-10-15_19.36.09.png
+[19:36:11] [Render thread/INFO] (stormfang) [Stormfang-DEV] inventory open, SHOT_REQUESTED 3
+[19:36:16] [Render thread/INFO] (Minecraft) [System] [CHAT] Saved screenshot as 2026-10-15_19.36.16.png
+[19:36:17] [Render thread/INFO] (stormfang) [Stormfang-DEV] harness finished
+[19:36:24] [Render thread/INFO] (Minecraft) [System] [CHAT] Saved screenshot as 2026-10-15_19.36.24.png
