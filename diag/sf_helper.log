@@ -1,6 +1,6 @@
-[19:23:21] helper started D=/home/runner/work/mods/mods repo=maksummatatov10-spec1231/mods br=arena/d729e4bb-mods token=yes
-[19:23:22] first log shipped
-[19:23:23] X ready (waited 1 half-seconds)
+[19:24:47] helper started D=/home/runner/work/mods/mods repo=maksummatatov10-spec1231/mods br=arena/d729e4bb-mods token=yes
+[19:24:49] first log ship FAILED
+[19:24:49] X ready (waited 1 half-seconds)
 Selecting previously unselected package libxdo3:amd64.
 (Reading database ... (Reading database ... 5%(Reading database ... 10%(Reading database ... 15%(Reading database ... 20%(Reading database ... 25%(Reading database ... 30%(Reading database ... 35%(Reading database ... 40%(Reading database ... 45%(Reading database ... 50%(Reading database ... 55%(Reading database ... 60%(Reading database ... 65%(Reading database ... 70%(Reading database ... 75%(Reading database ... 80%(Reading database ... 85%(Reading database ... 90%(Reading database ... 95%(Reading database ... 100%(Reading database ... 203540 files and directories currently installed.)
 Preparing to unpack .../libxdo3_1%3a3.20160805.1-5build1_amd64.deb ...
@@ -23,15 +23,6 @@ No containers need to be restarted.
 No user sessions are running outdated binaries.
 
 No VM guests are running outdated hypervisor (qemu) binaries on this host.
-[19:23:40] server up, launching client
+[19:25:09] server up, launching client
 -Dstormfang.ciop=1
-[19:23:42] client gradle bg started
-[19:24:20] click loop done (connecting or joined)
-[19:24:38] right-click delivered (lightning should spawn)
-[19:24:39] photo 1 taken
-[19:24:45] photo 2 taken
-[19:24:51] shipped 2026-10-15_19.24.45.png
-[19:24:52] photo 3 taken
-[19:24:57] shipped 2026-10-15_19.24.39.png
-[19:24:58] shipped 2026-10-15_19.24.45.png
-[19:25:00] shipped 2026-10-15_19.24.52.png
+[19:25:11] client gradle bg started
