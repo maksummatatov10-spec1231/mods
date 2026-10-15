@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# CI wrapper v28 — real gradle wrapper runs under gradlew_orig. Adds:
+# CI wrapper v29 — real gradle wrapper runs under gradlew_orig. Adds:
 #  * line-buffered tee (stdbuf) so `until grep` in later steps sees fresh lines;
 #  * a pkill shim injected via $GITHUB_ENV so the frozen "Stop game processes"
 #    step can't kill its own shell (pattern matched the step's argv) — without it
@@ -151,6 +151,15 @@ P=/tmp/proj-c
 LATEST="$P/run-client/logs/latest.log"
 rm -rf "$P"; cp -a "$D" "$P" >>"$LOGF" 2>&1
 mkdir -p "$P/run-client"
+# CI texture fix: the loom-islands dev client does not mount the mod's own resource
+# files (models/textures never reach the atlas — confirmed over v22-v28 diag). Ship the
+# exact same assets as a plain FILE resource pack in the run dir and auto-apply it:
+RPD="$P/run-client/resourcepacks/stormfang"
+mkdir -p "$RPD"
+printf '{"pack":{"pack_format":46,"description":"Stormfang (CI assets override)"}}' > "$RPD/pack.mcmeta"
+cp -a "$P/src/main/resources/assets" "$RPD/assets" 2>>"$LOGF"
+printf 'lang:en_us\nresourcePacks:["File/stormfang"]\nincompatibleResourcePacks:[]\n' > "$P/run-client/options.txt"
+say "asset pack staged: $(ls "$RPD/assets/stormfang" 2>/dev/null | tr '\n' ' ')"
 if ! pgrep -x Xvfb >/dev/null 2>&1; then ( Xvfb :99 -ac -screen 0 1600x900x24 >/dev/null 2>&1 & ); fi
 i=0; until [ -S /tmp/.X11-unix/X99 ] || [ "$i" -ge 30 ]; do sleep 0.5; i=$((i+1)); done
 say "X ready (waited ${i} half-seconds)"
