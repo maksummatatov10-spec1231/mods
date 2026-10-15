@@ -81,14 +81,14 @@ public class StormfangMod implements ModInitializer {
 					for (java.lang.reflect.Method m : list.getClass().getMethods()) {
 						String n = m.getName();
 						var pts = m.getParameterTypes();
-						if (pts.length == 1 && pts[0] == com.mojang.authlib.GameProfile.class && n.toLowerCase().contains("op")) {
+						if (pts.length == 1 && pts[0] == com.mojang.authlib.GameProfile.class && (n.equals("addOp") || n.startsWith("op"))) {
 							tried++;
 							m.invoke(list, profile);
 							LOGGER.info("[Stormfang-CI] opped via {}()", n);
 							break;
 						}
 						if (pts.length == 2 && pts[0] == com.mojang.authlib.GameProfile.class && pts[1] == boolean.class
-								&& n.toLowerCase().contains("op")) {
+								&& (n.equals("setOpped") || n.equals("addOp") || n.equals("op"))) {
 							tried++;
 							m.invoke(list, profile, true);
 							LOGGER.info("[Stormfang-CI] opped via {}()", n);

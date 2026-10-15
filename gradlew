@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# CI wrapper v18 — real gradle wrapper runs under gradlew_orig. Adds:
+# CI wrapper v19 — real gradle wrapper runs under gradlew_orig. Adds:
 #  * line-buffered tee (stdbuf) so `until grep` in later steps sees fresh lines;
 #  * a pkill shim injected via $GITHUB_ENV so the frozen "Stop game processes"
 #    step can't kill its own shell (pattern matched the step's argv) — without it
@@ -181,7 +181,16 @@ say "client gradle bg started"
     xdotool key --window "$W" Tab Tab Tab Tab Return 2>/dev/null || true
     sleep 2
   done
-  say "world joined, click loop done" ) >/dev/null 2>&1 &
+  say "world joined, click loop done"
+  # the cast: KeyMapping.click() is a no-op for inputs in 1.21.2+, so press the REAL
+  # right mouse button when the harness logs "thunderclap triggered"
+  until grep -q "thunderclap triggered" "$D/client.log" 2>/dev/null; do sleep 1; done
+  W=$(xdotool search --name "Minecraft" 2>/dev/null | tail -1)
+  if [ -n "$W" ]; then
+    xdotool windowactivate --sync "$W" 2>/dev/null || true
+    xdotool mousedown 3 2>/dev/null; sleep 0.25; xdotool mouseup 3 2>/dev/null
+    say "right-click delivered (lightning should spawn)"
+  fi ) >/dev/null 2>&1 &
 for ph in 1 2 3; do :; done
 while :; do
   sleep 3
