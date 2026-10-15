@@ -1,4 +1,4 @@
-[19:25:36] [main/INFO] (FabricLoader/GameProvider) Loading Minecraft 1.21.4 with Fabric Loader 0.16.9
+t 1.21.4 with Fabric Loader 0.16.9
 [19:25:36] [main/INFO] (FabricLoader) Loading 55 mods:
 	- fabric-api 0.119.4+1.21.4
 	- fabric-api-base 0.4.54+b47eab6b04
@@ -319,3 +319,12 @@ Native library (linux-x86-64/libflite.so) not found in resource path (/tmp/proj-
 [19:25:54] [Render thread/INFO] (Minecraft) Loaded 2 advancements
 [19:25:57] [Render thread/INFO] (stormfang) [Stormfang-DEV] joined world, giving stormblade
 [19:25:57] [Render thread/INFO] (Minecraft) [System] [CHAT] Gave 1 [Stormfang] to Player53
+[19:26:10] [Render thread/INFO] (stormfang) [Stormfang-DEV] SHOT_REQUESTED 1
+[19:26:12] [Render thread/INFO] (stormfang) [Stormfang-DEV] thunderclap triggered
+[19:26:13] [Render thread/INFO] (Minecraft) [System] [CHAT] Saved screenshot as 2026-10-15_19.26.13.png
+[19:26:13] [Render thread/INFO] (stormfang) [Stormfang-DEV] SHOT_REQUESTED 2
+[19:26:16] [Render thread/INFO] (stormfang) [Stormfang-DEV] inventory open, SHOT_REQUESTED 3
+[19:26:20] [Render thread/INFO] (Minecraft) [System] [CHAT] Saved screenshot as 2026-10-15_19.26.20.png
+[19:26:23] [Render thread/INFO] (stormfang) [Stormfang-DEV] harness finished
+[19:26:28] [Render thread/INFO] (Minecraft) [System] [CHAT] Saved screenshot as 2026-10-15_19.26.28.png
+[19:26:46] [Render thread/WARN] (Minecraft) Client disconnected with reason: Disconnected
