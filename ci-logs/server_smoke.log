@@ -95,3 +95,5 @@ stormfang
 
 Contact the server's administrator for more information!
 [18:03:07] [Server thread/WARN] (Minecraft) handleDisconnection() called twice
+[18:03:47] [Server thread/INFO] (Minecraft) com.mojang.authlib.GameProfile@7c14583f[id=39c4f4aa-4d39-353b-b70e-747427551322,name=Player104,properties={}] lost connection: Disconnected
+[18:03:53] [Server thread/INFO] (Minecraft) Server empty for 60 seconds, pausing
