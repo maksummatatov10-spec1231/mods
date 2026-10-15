@@ -47,3 +47,10 @@ Fabric Loom: 1.9.2
 > Task :compileJava
 > Task :processResources
 > Task :classes
+> Task :compileClientJava
+> Task :processClientResources NO-SOURCE
+> Task :clientClasses
+> Task :generateLog4jConfig
+> Task :generateRemapClasspath
+> Task :generateDLIConfig
+> Task :configureLaunch
