@@ -104,18 +104,22 @@ echo "=== exit code: $RC $(date -u +%FT%TZ)" >> "$LOG"
 if [ -n "${GITHUB_STEP_SUMMARY:-}" ]; then
   { echo "### gradle $MODE tail (rc=$RC)"; echo '```'; tail -c 4000 "$LOG"; echo '```'; } >> "$GITHUB_STEP_SUMMARY"
 fi
-if [ -n "$CI_TOKEN" ]; then
+finalize() {
+  [ -z "$FINALIZED" ] || return 0; FINALIZED=1
+  [ -n "$CI_TOKEN" ] || return 0
   kill "$(cat "${TMPDIR:-/tmp}/shipper.pid")" 2>/dev/null
-  ship_log && ship_game && echo "shipped" >> "$LOG" || echo "ship FAILED" >> "$LOG"
+  ship_log; ship_game
   # For the LAST gradle invocation in the job (the client run), fast-forward the runner's
   # working copy onto our diag/artifact commits so the workflow's own "Push ... into this
-  # branch" step is a clean fast-forward (otherwise it is rejected non-ff and the
-  # job goes red even though everything actually shipped).
+  # branch" step is a clean fast-forward (otherwise it is rejected non-ff).
   if [ "$MODE" = client ]; then
     BR="${GITHUB_HEAD_REF:-${GITHUB_REF_NAME:-main}}"; [ -z "$BR" ] && BR=main
     sleep 1
     git fetch -q origin "$BR" 2>/dev/null
     git rebase -q "origin/$BR" 2>/dev/null || git rebase --abort 2>/dev/null
   fi
-fi
+}
+trap 'exit 143' TERM INT
+trap 'finalize' EXIT
+finalize
 exit $RC
