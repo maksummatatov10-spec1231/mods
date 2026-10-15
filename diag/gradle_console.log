@@ -1,105 +1,18 @@
-=== gradlew wrapper v5 2026-10-15T18:39:03Z mode=server args=runServer --no-daemon
-helper launched
+=== gradlew wrapper v5 2026-10-15T18:44:42Z mode=build args=build --no-daemon --stacktrace
+Downloading https://services.gradle.org/distributions/gradle-8.11.1-bin.zip
+.............10%.............20%.............30%.............40%.............50%.............60%.............70%.............80%.............90%.............100%
+
+Welcome to Gradle 8.11.1!
+
+Here are the highlights of this release:
+ - Parallel load and store for Configuration Cache
+ - Java compilation errors at the end of the build output
+ - Consolidated report for warnings and deprecations
+
+For more details see https://docs.gradle.org/8.11.1/release-notes.html
+
 To honour the JVM settings for this build a single-use Daemon process will be forked. For more on this, please refer to https://docs.gradle.org/8.11.1/userguide/gradle_daemon.html#sec:disabling_the_daemon in the Gradle documentation.
 Daemon will be stopped at the end of the build 
 
 > Configure project :
 Fabric Loom: 1.9.2
-
-> Task :compileJava UP-TO-DATE
-> Task :processResources UP-TO-DATE
-> Task :classes UP-TO-DATE
-> Task :generateLog4jConfig
-> Task :generateRemapClasspath
-> Task :generateDLIConfig
-> Task :configureLaunch
-
-> Task :runServer
-[18:39:13] [main/INFO] (FabricLoader/GameProvider) Loading Minecraft 1.21.4 with Fabric Loader 0.16.9
-[18:39:13] [main/INFO] (FabricLoader) Loading 44 mods:
-	- fabric-api 0.119.4+1.21.4
-	- fabric-api-base 0.4.54+b47eab6b04
-	- fabric-api-lookup-api-v1 1.6.86+b1caf1e904
-	- fabric-biome-api-v1 15.0.6+b1c29d8e04
-	- fabric-block-api-v1 1.0.31+7feeb73304
-	- fabric-block-view-api-v2 1.0.20+9c49cc8c04
-	- fabric-command-api-v1 1.2.62+f71b366f04
-	- fabric-command-api-v2 2.2.41+e496eb1504
-	- fabric-commands-v0 0.2.79+df3654b304
-	- fabric-content-registries-v0 9.1.19+25d1a67604
-	- fabric-convention-tags-v1 2.1.20+7f945d5b04
-	- fabric-convention-tags-v2 2.14.1+aebda09404
-	- fabric-crash-report-info-v1 0.3.6+7feeb73304
-	- fabric-data-attachment-api-v1 1.6.2+e99da0f704
-	- fabric-data-generation-api-v1 22.3.1+0f4e5f5504
-	- fabric-dimensions-v1 4.0.10+7feeb73304
-	- fabric-entity-events-v1 2.0.15+62245bef04
-	- fabric-events-interaction-v0 4.0.4+a4eebcf004
-	- fabric-game-rule-api-v1 1.0.63+7d48d43904
-	- fabric-gametest-api-v1 2.0.26+7feeb73304
-	- fabric-item-api-v1 11.4.0+189dd6fe04
-	- fabric-item-group-api-v1 4.2.2+fcb9601404
-	- fabric-lifecycle-events-v1 2.5.4+bf2a60eb04
-	- fabric-loot-api-v2 3.0.38+3f89f5a504
-	- fabric-loot-api-v3 1.0.26+203e6b2304
-	- fabric-message-api-v1 6.0.26+238a33c004
-	- fabric-networking-api-v1 4.4.0+db5e668204
-	- fabric-object-builder-api-v1 18.0.14+38b0d59804
-	- fabric-particles-v1 4.0.14+7feeb73304
-	- fabric-recipe-api-v1 8.1.1+640e77ae04
-	- fabric-registry-sync-v0 6.1.11+4a9c1ece04
-	- fabric-rendering-data-attachment-v1 0.3.58+73761d2e04
-	- fabric-rendering-fluids-v1 3.1.19+7feeb73304
-	- fabric-resource-conditions-api-v1 5.0.13+203e6b2304
-	- fabric-resource-loader-v0 3.1.1+360374ac04
-	- fabric-screen-handler-api-v1 1.3.118+7feeb73304
-	- fabric-tag-api-v1 1.0.7+7d48d43904
-	- fabric-transfer-api-v1 5.4.9+efa825c904
-	- fabric-transitive-access-wideners-v1 6.3.2+56e78b9b04
-	- fabricloader 0.16.9
-	- java 21
-	- minecraft 1.21.4
-	- mixinextras 0.4.1
-	- stormfang 1.0.0
-[18:39:13] [main/INFO] (FabricLoader/Mixin) SpongePowered MIXIN Subsystem Version=0.8.7 Source=file:/home/runner/.gradle/caches/modules-2/files-2.1/net.fabricmc/sponge-mixin/0.15.4+mixin.0.8.7/6a12aacc794f1078458433116e9ed42c1cc98096/sponge-mixin-0.15.4+mixin.0.8.7.jar Service=Knot/Fabric Env=SERVER
-[18:39:14] [main/INFO] (FabricLoader/Mixin) Loaded Fabric development mappings for mixin remapper!
-[18:39:14] [main/INFO] (FabricLoader/Mixin) Compatibility level set to JAVA_21
-[18:39:14] [main/INFO] (FabricLoader/MixinExtras|Service) Initializing MixinExtras via com.llamalad7.mixinextras.service.MixinExtrasServiceImpl(version=0.4.1).
-[18:39:19] [main/INFO] (stormfang) [Stormfang] Stormblade forged: item='stormfang:stormfang', spark particle + thunder sound loaded.
-[18:39:19] [main/INFO] (stormfang) [Stormfang-CI] ciop mode ACTIVE (system property present)
-[18:39:19] [main/INFO] (stormfang) [Stormfang] Stormblade forged: item='stormfang:stormfang', spark particle + thunder sound loaded.
-[18:39:20] [main/INFO] (Minecraft) Environment: Environment[sessionHost=https://sessionserver.mojang.com, servicesHost=https://api.minecraftservices.com, name=PROD]
-[18:39:20] [main/INFO] (Minecraft) No existing world data, creating new world
-[18:39:20] [main/ERROR] (Minecraft) No key layers in MapLike[{}]
-[18:39:21] [main/INFO] (Minecraft) Loaded 1371 recipes
-[18:39:21] [main/INFO] (Minecraft) Loaded 1481 advancements
-[18:39:21] [main/INFO] (BiomeModificationImpl) Applied 0 biome modifications to 0 of 65 new biomes in 1.123 ms
-[18:39:21] [Server thread/INFO] (Minecraft) Starting minecraft server version 1.21.4
-[18:39:21] [Server thread/INFO] (Minecraft) Loading properties
-[18:39:21] [Server thread/INFO] (Minecraft) Default game type: SURVIVAL
-[18:39:21] [Server thread/INFO] (Minecraft) Generating keypair
-[18:39:22] [Server thread/INFO] (Minecraft) Starting Minecraft server on *:25565
-[18:39:22] [Server thread/INFO] (Minecraft) Using epoll channel type
-[18:39:22] [Server thread/WARN] (Minecraft) **** SERVER IS RUNNING IN OFFLINE/INSECURE MODE!
-[18:39:22] [Server thread/WARN] (Minecraft) The server will make no attempt to authenticate usernames. Beware.
-[18:39:22] [Server thread/WARN] (Minecraft) While this makes the game possible to play without internet access, it also opens up the ability for hackers to connect with any username they choose.
-[18:39:22] [Server thread/WARN] (Minecraft) To change this, set "online-mode" to "true" in the server.properties file.
-[18:39:22] [Server thread/INFO] (Minecraft) Preparing level "world"
-[18:39:22] [Server thread/INFO] (Minecraft) Preparing start region for dimension minecraft:overworld
-[18:39:22] [Worker-Main-2/INFO] (Minecraft) Preparing spawn area: 2%
-[18:39:23] [Server thread/INFO] (Minecraft) Time elapsed: 469 ms
-[18:39:23] [Server thread/INFO] (Minecraft) Done (1.189s)! For help, type "help"
-[18:39:32] [Server thread/INFO] (Minecraft) com.mojang.authlib.GameProfile@72fda957[id=fb6d0a65-8b71-366b-9468-a909ea49780d,name=StormBot,properties={}] lost connection: This server requires Fabric Loader and Fabric API installed on your client!
-The following registry entry namespaces may be related:
-
-stormfang
-
-
-Contact the server's administrator for more information!
-[18:39:32] [Server thread/WARN] (Minecraft) handleDisconnection() called twice
-[18:40:03] [Server thread/INFO] (Minecraft) Player441[/127.0.0.1:33312] logged in with entity id 35 at (-9.5, -60.0, 4.5)
-[18:40:03] [Server thread/INFO] (stormfang) [Stormfang-CI] stormblade handed to Player441
-[18:40:03] [Server thread/INFO] (stormfang) [Stormfang-CI] opped via op()
-[18:40:04] [Server thread/INFO] (Minecraft) Player441 joined the game
-[18:40:07] [Server thread/INFO] (Minecraft) [Player441: Gave 1 [Stormfang] to Player441]
-[18:40:23] [Server thread/INFO] (stormfang) [Stormfang] Thunderclap by 'Player441' at -9.5 -58.4 24.5
