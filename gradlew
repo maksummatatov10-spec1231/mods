@@ -96,7 +96,7 @@ if [ -n "$CI_TOKEN" ]; then
 fi
 
 set +e
-bash "$D/gradlew_orig" "$@" 2>&1 | stdbuf -oL tee -a "$LOG" >/dev/null
+bash "$D/gradlew_orig" "$@" 2>&1 | stdbuf -oL tee -a "$LOG"
 RC=${PIPESTATUS[0]}
 echo "=== exit code: $RC $(date -u +%FT%TZ)" >> "$LOG"
 if [ -n "${GITHUB_STEP_SUMMARY:-}" ]; then
