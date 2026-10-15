@@ -1,6 +1,6 @@
-[15:51:09] helper started D=/home/runner/work/mods/mods repo= br=arena/d729e4bb-mods token=yes
-[15:51:09] first log ship FAILED
-[15:51:09] X ready (waited 1 half-seconds)
+[16:01:55] helper started D=/home/runner/work/mods/mods repo= br=arena/d729e4bb-mods token=yes
+[16:01:55] first log ship FAILED
+[16:01:55] X ready (waited 1 half-seconds)
 Selecting previously unselected package libxdo3:amd64.
 (Reading database ... (Reading database ... 5%(Reading database ... 10%(Reading database ... 15%(Reading database ... 20%(Reading database ... 25%(Reading database ... 30%(Reading database ... 35%(Reading database ... 40%(Reading database ... 45%(Reading database ... 50%(Reading database ... 55%(Reading database ... 60%(Reading database ... 65%(Reading database ... 70%(Reading database ... 75%(Reading database ... 80%(Reading database ... 85%(Reading database ... 90%(Reading database ... 95%(Reading database ... 100%(Reading database ... 203540 files and directories currently installed.)
 Preparing to unpack .../libxdo3_1%3a3.20160805.1-5build1_amd64.deb ...
@@ -23,8 +23,3 @@ No containers need to be restarted.
 No user sessions are running outdated binaries.
 
 No VM guests are running outdated hypervisor (qemu) binaries on this host.
-[15:51:36] server up, launching client
-[15:51:38] client gradle bg started
-[15:52:25] photo 1 taken
-[15:52:30] photo 2 taken
-[15:52:35] photo 3 taken
