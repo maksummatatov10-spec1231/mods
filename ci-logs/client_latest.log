@@ -318,3 +318,10 @@ Native library (linux-x86-64/libflite.so) not found in resource path (/tmp/proj-
 		at net.fabricmc.devlaunchinjector.Main.main(Main.java:86) [dev-launch-injector-0.2.1+build.8.jar:?]
 [19:30:27] [Render thread/INFO] (Minecraft) Connecting to localhost, 25565
 [19:30:29] [Render thread/INFO] (Minecraft) Loaded 2 advancements
+[19:30:31] [Render thread/INFO] (stormfang) [Stormfang-DEV] joined world, giving stormblade
+[19:30:31] [Render thread/INFO] (Minecraft) [System] [CHAT] Gave 1 [Stormfang] to Player389
+[19:30:44] [Render thread/INFO] (stormfang) [Stormfang-DEV] SHOT_REQUESTED 1
+[19:30:47] [Render thread/INFO] (stormfang) [Stormfang-DEV] thunderclap triggered
+[19:30:48] [Render thread/INFO] (stormfang) [Stormfang-DEV] SHOT_REQUESTED 2
+[19:30:49] [Render thread/INFO] (Minecraft) [System] [CHAT] Saved screenshot as 2026-10-15_19.30.48.png
+[19:30:51] [Render thread/INFO] (stormfang) [Stormfang-DEV] inventory open, SHOT_REQUESTED 3
