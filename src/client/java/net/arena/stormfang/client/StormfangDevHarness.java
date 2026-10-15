@@ -41,12 +41,18 @@ public class StormfangDevHarness implements ClientModInitializer {
 					// mapping-agnostic: find the "launchMultiplayer/startMultiplayerPlay"-style
 					// method on Minecraft(String host, int port) and invoke it.
 					boolean ok = false;
-					for (java.lang.reflect.Method m : client.getClass().getMethods()) {
+					StringBuilder cands = new StringBuilder();
+					for (java.lang.reflect.Method m : client.getClass().getDeclaredMethods()) {
+						String mn = m.getName().toLowerCase();
+						if (!(mn.contains("multiplayer") || mn.contains("connect"))) continue;
 						Class<?>[] p = m.getParameterTypes();
+						cands.append(m.getName()).append('(');
+						for (Class<?> c : p) cands.append(c.getSimpleName()).append(',');
+						cands.append(") ");
 						if (p.length == 2 && p[0] == String.class
-								&& (p[1] == int.class || p[1] == Integer.class)
-								&& m.getName().toLowerCase().contains("multiplayer")) {
+								&& (p[1] == int.class || p[1] == Integer.class)) {
 							try {
+								m.setAccessible(true);
 								m.invoke(client, "localhost", 25565);
 								StormfangMod.LOGGER.info("[Stormfang-DEV] connected via {}()", m.getName());
 								ok = true;
@@ -57,7 +63,7 @@ public class StormfangDevHarness implements ClientModInitializer {
 						}
 					}
 					if (!ok) {
-						StormfangMod.LOGGER.warn("[Stormfang-DEV] no multiplayer launcher found");
+						StormfangMod.LOGGER.warn("[Stormfang-DEV] no launcher among: {}", cands);
 					}
 				}
 				if (!onboardingHandled && menuTick > 30 && client.screen != null) {
