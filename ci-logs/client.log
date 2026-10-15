@@ -241,3 +241,9 @@ java.lang.IllegalStateException: Failed to open OpenAL device
 [19:41:18] [Render thread/INFO] (Minecraft) Loaded 2 advancements
 [19:41:20] [Render thread/INFO] (stormfang) [Stormfang-DEV] joined world, giving stormblade
 [19:41:20] [Render thread/INFO] (Minecraft) [System] [CHAT] Gave 1 [Stormfang] to Player382
+[19:41:33] [Render thread/INFO] (stormfang) [Stormfang-DEV] SHOT_REQUESTED 1
+[19:41:36] [Render thread/INFO] (stormfang) [Stormfang-DEV] thunderclap triggered
+[19:41:36] [Render thread/INFO] (Minecraft) [System] [CHAT] Saved screenshot as 2026-10-15_19.41.36.png
+[19:41:37] [Render thread/INFO] (stormfang) [Stormfang-DEV] SHOT_REQUESTED 2
+[19:41:40] [Render thread/INFO] (stormfang) [Stormfang-DEV] inventory open, SHOT_REQUESTED 3
+[19:41:43] [Render thread/INFO] (Minecraft) [System] [CHAT] Saved screenshot as 2026-10-15_19.41.43.png
