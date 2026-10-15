@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# CI wrapper v22 — real gradle wrapper runs under gradlew_orig. Adds:
+# CI wrapper v23 — real gradle wrapper runs under gradlew_orig. Adds:
 #  * line-buffered tee (stdbuf) so `until grep` in later steps sees fresh lines;
 #  * a pkill shim injected via $GITHUB_ENV so the frozen "Stop game processes"
 #    step can't kill its own shell (pattern matched the step's argv) — without it
@@ -210,7 +210,7 @@ while :; do
     has "SHOT_REQUESTED $ph" || continue
     [ -f "$F" ] && continue
     : > "$F"
-    sleep 2
+    if [ "$ph" = 3 ]; then sleep 1; else sleep 2; fi
     W=$(xdotool search --name "Minecraft" 2>/dev/null | tail -1)
     if [ -n "$W" ]; then xdotool windowactivate "$W" key F2 2>/dev/null || xdotool key F2 2>/dev/null; else xdotool key F2 2>/dev/null; fi
     say "photo $ph taken"

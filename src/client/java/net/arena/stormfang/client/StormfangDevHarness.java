@@ -64,12 +64,13 @@ public class StormfangDevHarness implements ClientModInitializer {
 					StormfangMod.LOGGER.info("[Stormfang-DEV] SHOT_REQUESTED 2");
 				}
 				if (tick == 430) {
-					if (client.options.keyInventory != null) {
-						client.options.keyInventory.click(InputConstants.getKey(0, 69)); // keyboard E
+					// click() on keyInventory is a no-op in 1.21.2+ — open the screen directly
+					if (client.player != null) {
+						client.setScreen(new net.minecraft.client.gui.screens.inventory.InventoryScreen(client.player));
 					}
 					StormfangMod.LOGGER.info("[Stormfang-DEV] inventory open, SHOT_REQUESTED 3");
 				}
-				if (tick == 500) {
+				if (tick == 560) {
 					if (client.screen != null) {
 						client.setScreen(null);
 					}
