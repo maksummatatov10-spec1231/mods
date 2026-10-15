@@ -1,4 +1,4 @@
-=== gradlew wrapper v5 2026-10-15T15:17:39Z mode=build args=build --no-daemon --stacktrace
+=== gradlew wrapper v5 2026-10-15T15:17:26Z mode=build args=build --no-daemon --stacktrace
 Downloading https://services.gradle.org/distributions/gradle-8.11.1-bin.zip
 .............10%.............20%.............30%.............40%.............50%.............60%.............70%.............80%.............90%.............100%
 
@@ -17,7 +17,7 @@ A problem occurred evaluating root project 'stormfang'.
 > Run with --scan to get full insights.
 > Get more help at https://help.gradle.org.
 
-BUILD FAILED in 13s
+BUILD FAILED in 23s
 
 FAILURE: Build failed with an exception.
 
@@ -34,7 +34,7 @@ A problem occurred evaluating root project 'stormfang'.
 > Run with --scan to get full insights.
 > Get more help at https://help.gradle.org.
 
-BUILD FAILED in 3s
+BUILD FAILED in 5s
 no loom script tasks available
 
 Welcome to Gradle 8.11.1!
@@ -48,3 +48,6 @@ For more details see https://docs.gradle.org/8.11.1/release-notes.html
 
 To honour the JVM settings for this build a single-use Daemon process will be forked. For more on this, please refer to https://docs.gradle.org/8.11.1/userguide/gradle_daemon.html#sec:disabling_the_daemon in the Gradle documentation.
 Daemon will be stopped at the end of the build 
+
+> Configure project :
+Fabric Loom: 1.9.2
