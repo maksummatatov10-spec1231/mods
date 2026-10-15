@@ -97,3 +97,8 @@ stormfang
 
 Contact the server's administrator for more information!
 [20:25:34] [Server thread/WARN] (Minecraft) handleDisconnection() called twice
+[20:26:03] [Server thread/INFO] (Minecraft) Player776[/127.0.0.1:40332] logged in with entity id 1 at (-7.5, -60.0, 3.5)
+[20:26:03] [Server thread/INFO] (stormfang) [Stormfang-CI] stormblade handed to Player776
+[20:26:04] [Server thread/INFO] (stormfang) [Stormfang-CI] opped via op()
+[20:26:04] [Server thread/INFO] (Minecraft) Player776 joined the game
+[20:26:06] [Server thread/INFO] (Minecraft) [Player776: Gave 1 [Stormfang] to Player776]
