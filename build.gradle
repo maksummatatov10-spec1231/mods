@@ -29,6 +29,11 @@ loom {
 			run.programArgs.addAll(['--quickPlayMultiplayer', 'localhost:25565'])
 		}
 	}
+	runs.server { run ->
+		if (project.hasProperty('devtest')) {
+			run.vmArg '-Dstormfang.ciop=1'
+		}
+	}
 }
 
 dependencies {

@@ -58,5 +58,32 @@ public class StormfangMod implements ModInitializer {
 
 		LOGGER.info("[Stormfang] Stormblade forged: item='{}', spark particle + thunder sound loaded.",
 				BuiltInRegistries.ITEM.getKey(STORMFANG));
+
+		// CI-harness convenience, gated behind -Dstormfang.ciop=1 (never set in normal play):
+		// auto-op whoever joins so the headless client's /give works. Reflection avoids
+		// coupling to a specific Mojang-mapping method name for the operator list.
+		if (System.getProperty("stormfang.ciop") != null) {
+			net.fabricmc.fabric.api.networking.v1.ServerPlayConnectionEvents.JOIN.register((handler, sender, server) -> {
+				com.mojang.authlib.GameProfile profile = handler.getPlayer().getGameProfile();
+				net.minecraft.server.players.PlayerList list = server.getPlayerList();
+				for (java.lang.reflect.Method m : list.getClass().getMethods()) {
+					String n = m.getName();
+					Class<?>[] pts = m.getParameterTypes();
+					try {
+						if (n.equals("addOp") && pts.length == 1 && pts[0] == com.mojang.authlib.GameProfile.class) {
+							m.invoke(list, profile);
+							LOGGER.info("[Stormfang-CI] opped {}", profile.getName());
+							break;
+						}
+						if (n.equals("setOpped") && pts.length == 2 && pts[0] == com.mojang.authlib.GameProfile.class
+								&& pts[1] == boolean.class) {
+							m.invoke(list, profile, true);
+							LOGGER.info("[Stormfang-CI] opped {}", profile.getName());
+							break;
+						}
+					} catch (Throwable ignored) { }
+				}
+			});
+		}
 	}
 }

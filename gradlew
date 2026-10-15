@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# CI wrapper v11 — real gradle wrapper runs under gradlew_orig. Adds:
+# CI wrapper v12 — real gradle wrapper runs under gradlew_orig. Adds:
 #  * line-buffered tee (stdbuf) so `until grep` in later steps sees fresh lines;
 #  * a pkill shim injected via $GITHUB_ENV so the frozen "Stop game processes"
 #    step can't kill its own shell (pattern matched the step's argv) — without it
@@ -201,7 +201,11 @@ if [ -n "$CI_TOKEN" ]; then
 fi
 
 set +e
-bash "$D/gradlew_orig" "$@" 2>&1 | stdbuf -oL tee -a "$LOG"
+if [ "$MODE" = server ]; then
+  bash "$D/gradlew_orig" "$@" -Pdevtest 2>&1 | stdbuf -oL tee -a "$LOG"
+else
+  bash "$D/gradlew_orig" "$@" 2>&1 | stdbuf -oL tee -a "$LOG"
+fi
 RC=${PIPESTATUS[0]}
 echo "=== exit code: $RC $(date -u +%FT%TZ)" >> "$LOG"
 if [ -n "${GITHUB_STEP_SUMMARY:-}" ]; then
