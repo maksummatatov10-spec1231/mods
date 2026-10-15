@@ -247,3 +247,5 @@ java.lang.IllegalStateException: Failed to open OpenAL device
 [19:41:37] [Render thread/INFO] (stormfang) [Stormfang-DEV] SHOT_REQUESTED 2
 [19:41:40] [Render thread/INFO] (stormfang) [Stormfang-DEV] inventory open, SHOT_REQUESTED 3
 [19:41:43] [Render thread/INFO] (Minecraft) [System] [CHAT] Saved screenshot as 2026-10-15_19.41.43.png
+[19:41:46] [Render thread/INFO] (stormfang) [Stormfang-DEV] harness finished
+[19:41:50] [Render thread/INFO] (Minecraft) [System] [CHAT] Saved screenshot as 2026-10-15_19.41.50.png
