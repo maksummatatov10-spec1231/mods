@@ -319,3 +319,10 @@ Native library (linux-x86-64/libflite.so) not found in resource path (/tmp/proj-
 [19:24:19] [Render thread/INFO] (Minecraft) Loaded 2 advancements
 [19:24:22] [Render thread/INFO] (stormfang) [Stormfang-DEV] joined world, giving stormblade
 [19:24:22] [Render thread/INFO] (Minecraft) [System] [CHAT] Gave 1 [Stormfang] to Player203
+[19:24:35] [Render thread/INFO] (stormfang) [Stormfang-DEV] SHOT_REQUESTED 1
+[19:24:37] [Render thread/INFO] (stormfang) [Stormfang-DEV] thunderclap triggered
+[19:24:38] [Render thread/INFO] (stormfang) [Stormfang-DEV] SHOT_REQUESTED 2
+[19:24:39] [Render thread/INFO] (Minecraft) [System] [CHAT] Saved screenshot as 2026-10-15_19.24.39.png
+[19:24:41] [Render thread/INFO] (stormfang) [Stormfang-DEV] inventory open, SHOT_REQUESTED 3
+[19:24:45] [Render thread/INFO] (Minecraft) [System] [CHAT] Saved screenshot as 2026-10-15_19.24.45.png
+[19:24:48] [Render thread/INFO] (stormfang) [Stormfang-DEV] harness finished
