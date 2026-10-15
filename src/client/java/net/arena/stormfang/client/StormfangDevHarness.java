@@ -33,31 +33,7 @@ public class StormfangDevHarness implements ClientModInitializer {
 
 		ClientTickEvents.END_CLIENT_TICK.register(client -> {
 			if (client.level == null) {
-				// first-run "accessibility" / title screens block quickPlay until dismissed:
-				// close any such screen ourselves so the client proceeds into the world.
-				menuTick++;
-				if (onboardingHandled && !connectAttempted && menuTick >= connectTick && client.level == null) {
-					connectAttempted = true;
-					// TitleScreen#init triggers vanilla's pending quickPlay task — that is
-					// exactly the --quickPlayMultiplayer we pass via the run config.
-					try {
-						client.setScreen(new net.minecraft.client.gui.screens.TitleScreen());
-						StormfangMod.LOGGER.info("[Stormfang-DEV] opened TitleScreen to run quickPlay");
-					} catch (Throwable e) {
-						StormfangMod.LOGGER.warn("[Stormfang-DEV] title open failed: {}", e.toString());
-					}
-				}
-				if (!onboardingHandled && menuTick > 30 && client.screen != null) {
-					String cn = client.screen.getClass().getSimpleName();
-					if (cn.contains("Accessibility")) {
-						client.setScreen(new net.minecraft.client.gui.screens.TitleScreen());
-						onboardingHandled = true;
-						connectTick = menuTick + 20;
-						StormfangMod.LOGGER.info("[Stormfang-DEV] dismissed first-run screen {}", cn);
-					}
-				}
-
-				return;
+				return; // menus handled outside; ticks only advance in-world
 			}
 			tick++;
 			try {

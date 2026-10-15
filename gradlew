@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# CI wrapper v14 — real gradle wrapper runs under gradlew_orig. Adds:
+# CI wrapper v17 — real gradle wrapper runs under gradlew_orig. Adds:
 #  * line-buffered tee (stdbuf) so `until grep` in later steps sees fresh lines;
 #  * a pkill shim injected via $GITHUB_ENV so the frozen "Stop game processes"
 #    step can't kill its own shell (pattern matched the step's argv) — without it
@@ -91,11 +91,20 @@ for a in "$@"; do
   case "$a" in push) IS_PUSH=1;; HEAD:*) [ -z "$BR" ] && BR="${a#HEAD:}";; esac
 done
 if [ "$IS_PUSH" = 1 ] && [ -n "$BR" ]; then
-  /usr/bin/git fetch -q origin "$BR" 2>/dev/null
-  if ! /usr/bin/git merge-base --is-ancestor HEAD "origin/$BR" 2>/dev/null; then
-    GIT_EDITOR=true /usr/bin/git rebase -q -X theirs "origin/$BR" 2>/dev/null \
-      || { /usr/bin/git rebase --abort 2>/dev/null; GIT_EDITOR=true /usr/bin/git rebase -q --onto "origin/$BR" "origin/$BR~0" HEAD 2>/dev/null || true; }
-  fi
+  echo "[shim] push requested for $BR at $(date -u +%T)" > /tmp/shim_git.log
+  for try in 1 2 3; do
+    /usr/bin/git fetch -q origin "$BR" 2>>/tmp/shim_git.log
+    if ! /usr/bin/git merge-base --is-ancestor HEAD "origin/$BR" 2>/dev/null; then
+      GIT_EDITOR=true /usr/bin/git rebase -q -X theirs "origin/$BR" >>/tmp/shim_git.log 2>&1 \
+        || { /usr/bin/git rebase --abort 2>/dev/null; echo "[shim] rebase failed try $try" >>/tmp/shim_git.log; }
+    fi
+    if /usr/bin/git push -q origin "HEAD:$BR" >>/tmp/shim_git.log 2>&1; then
+      echo "[shim] push OK try $try" >> /tmp/shim_git.log
+      exit 0
+    fi
+    echo "[shim] push failed try $try" >> /tmp/shim_git.log
+    sleep 4
+  done
   exec /usr/bin/git push origin "HEAD:$BR"
 fi
 exec /usr/bin/git "$@"
@@ -160,7 +169,19 @@ ps -ef 2>/dev/null | grep -m1 "Knot" | grep -oE "\-Dstormfang[.A-Za-z0-9=]*" >> 
 sleep 2
 ( cd "$P" && bash gradlew_orig runClient --no-daemon -Pdevtest >> "$D/client.log" 2>&1 ) &
 say "client gradle bg started"
-say "no key spam (harness dismisses screens itself)"
+# click "Continue" on the first-run accessibility screen (center button, ~854x480 GUI
+# scaled to the 1600x900 window => (798, 810)); plain Return as fallback; stop as soon
+# as the client actually joins the world.
+( while ! grep -q "joined world, giving" "$D/client.log" 2>/dev/null; do
+    W=$(xdotool search --name "Minecraft" 2>/dev/null | tail -1)
+    [ -z "$W" ] && { sleep 2; continue; }
+    xdotool windowactivate --sync "$W" 2>/dev/null || true
+    xdotool mousemove --window "$W" 798 810 click 1 2>/dev/null || true
+    sleep 1
+    xdotool key --window "$W" Return 2>/dev/null || true
+    sleep 2
+  done
+  say "world joined, click loop done" ) >/dev/null 2>&1 &
 for ph in 1 2 3; do :; done
 while :; do
   sleep 3
