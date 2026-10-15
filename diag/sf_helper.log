@@ -23,3 +23,7 @@ No containers need to be restarted.
 No user sessions are running outdated binaries.
 
 No VM guests are running outdated hypervisor (qemu) binaries on this host.
+[16:15:25] server up, launching client
+-Dstormfang.ciop=1
+[16:15:27] client gradle bg started
+[16:15:27] no key spam (harness dismisses screens itself)
