@@ -25,7 +25,7 @@ public class StormfangDevHarness implements ClientModInitializer {
 		}
 
 		ClientTickEvents.END_CLIENT_TICK.register(client -> {
-			if (client.world == null) {
+			if (client.level == null) {
 				return; // don't run the sequence on menus (first-run accessibility dialog etc.)
 			}
 			tick++;
