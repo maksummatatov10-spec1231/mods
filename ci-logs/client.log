@@ -52,3 +52,5 @@ Fabric Loom: 1.9.2
 > Task :generateRemapClasspath
 > Task :generateDLIConfig
 > Task :configureLaunch
+> Task :downloadAssets
+> Task :configureClientLaunch
