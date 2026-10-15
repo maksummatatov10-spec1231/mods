@@ -316,3 +316,10 @@ Native library (linux-x86-64/libflite.so) not found in resource path (/tmp/proj-
 		at net.fabricmc.loader.impl.launch.knot.KnotClient.main(KnotClient.java:23) [fabric-loader-0.16.9.jar:?]
 		at net.fabricmc.devlaunchinjector.Main.main(Main.java:86) [dev-launch-injector-0.2.1+build.8.jar:?]
 [19:05:39] [Render thread/INFO] (Minecraft) Connecting to localhost, 25565
+[19:05:42] [Render thread/INFO] (Minecraft) Loaded 2 advancements
+[19:05:44] [Render thread/INFO] (stormfang) [Stormfang-DEV] joined world, giving stormblade
+[19:05:44] [Render thread/INFO] (Minecraft) [System] [CHAT] Gave 1 [Stormfang] to Player886
+[19:05:57] [Render thread/INFO] (stormfang) [Stormfang-DEV] SHOT_REQUESTED 1
+[19:06:00] [Render thread/INFO] (stormfang) [Stormfang-DEV] thunderclap triggered
+[19:06:01] [Render thread/INFO] (stormfang) [Stormfang-DEV] SHOT_REQUESTED 2
+[19:06:01] [Render thread/INFO] (Minecraft) [System] [CHAT] Saved screenshot as 2026-10-15_19.06.01.png
