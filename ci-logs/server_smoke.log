@@ -84,3 +84,14 @@ Fabric Loom: 1.9.2
 [19:17:41] [Server thread/WARN] (Minecraft) To change this, set "online-mode" to "true" in the server.properties file.
 [19:17:41] [Server thread/INFO] (Minecraft) Preparing level "world"
 [19:17:41] [Server thread/INFO] (Minecraft) Preparing start region for dimension minecraft:overworld
+[19:17:42] [Worker-Main-2/INFO] (Minecraft) Preparing spawn area: 2%
+[19:17:42] [Server thread/INFO] (Minecraft) Time elapsed: 312 ms
+[19:17:42] [Server thread/INFO] (Minecraft) Done (1.204s)! For help, type "help"
+[19:17:59] [Server thread/INFO] (Minecraft) com.mojang.authlib.GameProfile@30562a84[id=fb6d0a65-8b71-366b-9468-a909ea49780d,name=StormBot,properties={}] lost connection: This server requires Fabric Loader and Fabric API installed on your client!
+The following registry entry namespaces may be related:
+
+stormfang
+
+
+Contact the server's administrator for more information!
+[19:17:59] [Server thread/WARN] (Minecraft) handleDisconnection() called twice
