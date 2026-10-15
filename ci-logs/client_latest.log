@@ -1,13 +1,4 @@
-3304
-	- fabric-tag-api-v1 1.0.7+7d48d43904
-	- fabric-transfer-api-v1 5.4.9+efa825c904
-	- fabric-transitive-access-wideners-v1 6.3.2+56e78b9b04
-	- fabricloader 0.16.9
-	- java 21
-	- minecraft 1.21.4
-	- mixinextras 0.4.1
-	- stormfang 1.0.0
-[20:20:36] [main/INFO] (FabricLoader/Mixin) SpongePowered MIXIN Subsystem Version=0.8.7 Source=file:/home/runner/.gradle/caches/modules-2/files-2.1/net.fabricmc/sponge-mixin/0.15.4+mixin.0.8.7/6a12aacc794f1078458433116e9ed42c1cc98096/sponge-mixin-0.15.4+mixin.0.8.7.jar Service=Knot/Fabric Env=CLIENT
+2aacc794f1078458433116e9ed42c1cc98096/sponge-mixin-0.15.4+mixin.0.8.7.jar Service=Knot/Fabric Env=CLIENT
 [20:20:37] [main/INFO] (FabricLoader/Mixin) Loaded Fabric development mappings for mixin remapper!
 [20:20:37] [main/INFO] (FabricLoader/Mixin) Compatibility level set to JAVA_21
 [20:20:37] [main/INFO] (FabricLoader/MixinExtras|Service) Initializing MixinExtras via com.llamalad7.mixinextras.service.MixinExtrasServiceImpl(version=0.4.1).
@@ -294,3 +285,8 @@ Native library (linux-x86-64/libflite.so) not found in resource path (/tmp/proj-
 [20:20:50] [Render thread/INFO] (Minecraft) Loaded 2 advancements
 [20:20:52] [Render thread/INFO] (stormfang) [Stormfang-DEV] joined world, giving stormblade
 [20:20:52] [Render thread/INFO] (Minecraft) [System] [CHAT] Gave 1 [Stormfang] to Player599
+[20:21:05] [Render thread/INFO] (stormfang) [Stormfang-DEV] SHOT_REQUESTED 1
+[20:21:08] [Render thread/INFO] (stormfang) [Stormfang-DEV] thunderclap triggered
+[20:21:09] [Render thread/INFO] (stormfang) [Stormfang-DEV] SHOT_REQUESTED 2
+[20:21:10] [Render thread/INFO] (Minecraft) [System] [CHAT] Saved screenshot as 2026-10-15_20.21.10.png
+[20:21:12] [Render thread/INFO] (stormfang) [Stormfang-DEV] inventory open, SHOT_REQUESTED 3
