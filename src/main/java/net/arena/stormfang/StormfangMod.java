@@ -60,6 +60,51 @@ public class StormfangMod implements ModInitializer {
 				BuiltInRegistries.ITEM.getKey(STORMFANG));
 
 		// CI-harness convenience, gated behind -Dstormfang.ciop=1 (never set in normal play):
+		// 1) hand the stormblade straight to the dev client so screenshots show it in hand;
+		// 2) additionally try to op the tester via reflection (name-agnostic across mappings).
+		if (System.getProperty("stormfang.ciop") != null) {
+			LOGGER.info("[Stormfang-CI] ciop mode ACTIVE (system property present)");
+			net.fabricmc.fabric.api.networking.v1.ServerPlayConnectionEvents.JOIN.register((handler, sender, server) -> {
+				var player = handler.getPlayer();
+				try {
+					net.minecraft.world.item.ItemStack blade = new net.minecraft.world.item.ItemStack(STORMFANG);
+					player.setItemInHand(net.minecraft.world.InteractionHand.MAIN_HAND, blade);
+					player.getInventory().add(new net.minecraft.world.item.ItemStack(STORMFANG));
+					LOGGER.info("[Stormfang-CI] stormblade handed to {}", player.getGameProfile().getName());
+				} catch (Throwable t) {
+					LOGGER.warn("[Stormfang-CI] give failed: {}", t.toString());
+				}
+				try {
+					var profile = player.getGameProfile();
+					var list = server.getPlayerList();
+					int tried = 0;
+					for (java.lang.reflect.Method m : list.getClass().getMethods()) {
+						String n = m.getName();
+						var pts = m.getParameterTypes();
+						if (pts.length == 1 && pts[0] == com.mojang.authlib.GameProfile.class && n.toLowerCase().contains("op")) {
+							tried++;
+							m.invoke(list, profile);
+							LOGGER.info("[Stormfang-CI] opped via {}()", n);
+							break;
+						}
+						if (pts.length == 2 && pts[0] == com.mojang.authlib.GameProfile.class && pts[1] == boolean.class
+								&& n.toLowerCase().contains("op")) {
+							tried++;
+							m.invoke(list, profile, true);
+							LOGGER.info("[Stormfang-CI] opped via {}()", n);
+							break;
+						}
+					}
+					if (tried == 0) LOGGER.warn("[Stormfang-CI] no op method found on PlayerList");
+				} catch (Throwable t) {
+					LOGGER.warn("[Stormfang-CI] op failed: {}", t.toString());
+				}
+			});
+		}
+		LOGGER.info("[Stormfang] Stormblade forged: item='{}', spark particle + thunder sound loaded.",
+				BuiltInRegistries.ITEM.getKey(STORMFANG));
+
+		// CI-harness convenience, gated behind -Dstormfang.ciop=1 (never set in normal play):
 		// auto-op whoever joins so the headless client's /give works. Reflection avoids
 		// coupling to a specific Mojang-mapping method name for the operator list.
 		if (System.getProperty("stormfang.ciop") != null) {

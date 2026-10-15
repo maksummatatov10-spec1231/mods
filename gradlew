@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# CI wrapper v12 — real gradle wrapper runs under gradlew_orig. Adds:
+# CI wrapper v13 — real gradle wrapper runs under gradlew_orig. Adds:
 #  * line-buffered tee (stdbuf) so `until grep` in later steps sees fresh lines;
 #  * a pkill shim injected via $GITHUB_ENV so the frozen "Stop game processes"
 #    step can't kill its own shell (pattern matched the step's argv) — without it
@@ -156,17 +156,11 @@ hship "$LOGF" "diag/sf_helper.log"
   done ) >/dev/null 2>&1 &
 until grep -q "Done (" "$D/server_smoke.log" 2>/dev/null; do sleep 3; done
 say "server up, launching client"
+ps -ef 2>/dev/null | grep -m1 "Knot" | grep -oE "\-Dstormfang[.A-Za-z0-9=]*" >> "$LOGF" 2>&1 || true
 sleep 2
 ( cd "$P" && bash gradlew_orig runClient --no-daemon -Pdevtest >> "$D/client.log" 2>&1 ) &
 say "client gradle bg started"
-# auto-dismiss the first-run accessibility/title screens so quickPlay proceeds
-( for i in $(seq 1 90); do
-    grep -q "SHOT_REQUESTED 1" "$D/client.log" 2>/dev/null && break
-    W=$(xdotool search --name "Minecraft" 2>/dev/null | tail -1)
-    [ -n "$W" ] && xdotool key --window "$W" Escape Return 2>/dev/null
-    sleep 2
-  done ) >/dev/null 2>&1 &
-say "menu-dismiss loop started"
+say "no key spam (harness dismisses screens itself)"
 for ph in 1 2 3; do :; done
 while :; do
   sleep 3

@@ -18,6 +18,7 @@ import net.arena.stormfang.StormfangMod;
  */
 public class StormfangDevHarness implements ClientModInitializer {
 	private int tick;
+	private int menuTick;
 
 	@Override
 	public void onInitializeClient() {
@@ -29,6 +30,16 @@ public class StormfangDevHarness implements ClientModInitializer {
 
 		ClientTickEvents.END_CLIENT_TICK.register(client -> {
 			if (client.level == null) {
+				// first-run "accessibility" / title screens block quickPlay until dismissed:
+				// close any such screen ourselves so the client proceeds into the world.
+				menuTick++;
+				if (menuTick > 40 && menuTick % 20 == 0 && client.screen != null) {
+					String cn = client.screen.getClass().getSimpleName();
+					if (cn.contains("Accessibility") || cn.contains("Title") || cn.contains("Language")) {
+						client.setScreen(null);
+						StormfangMod.LOGGER.info("[Stormfang-DEV] dismissed first-run screen {}", cn);
+					}
+				}
 				return;
 			}
 			tick++;
